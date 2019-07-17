@@ -1,0 +1,12 @@
+allOf:
+  - $ref: '#/definitions/AnalysisBoundary'
+  - type: object
+    properties:
+      coordinates:
+        $ref: "#/definitions/PointCoordinates"
+      width:
+        type: number
+      height:
+        type: number
+      genericType:
+        $ref: '#/definitions/ElementType'

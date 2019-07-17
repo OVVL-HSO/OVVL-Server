@@ -1,0 +1,16 @@
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  startElement:
+    $ref: '#/definitions/ConnectedElement'
+  endElement:
+    $ref: '#/definitions/ConnectedElement'
+  type:
+    $ref: '#/definitions/DataFlowType'
+  options:
+    $ref: '#/definitions/DataFlowOptions'
+  cpe:
+    type: string

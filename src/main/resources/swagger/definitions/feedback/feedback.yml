@@ -1,0 +1,14 @@
+type: object
+properties:
+  date:
+    type: string
+    maximum: 25
+  message:
+    type: string
+    maximum: 500
+  type:
+    $ref: '#/definitions/FeedbackType'
+  contactMail:
+    type: string
+    maximum: 50
+

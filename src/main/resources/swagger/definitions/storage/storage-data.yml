@@ -1,0 +1,12 @@
+allOf:
+  - $ref: '#/definitions/BaseModelStorageData'
+  - type: object
+    properties:
+      modelID:
+        type: string
+      date:
+        type: string
+      editedDate:
+        type: string
+      owner:
+        type: string

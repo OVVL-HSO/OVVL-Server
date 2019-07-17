@@ -1,0 +1,8 @@
+type: string
+enum:
+  - Wire
+  - Wi-Fi
+  - Bluetooth
+  - Mobile Network
+  - Other
+  - Not Selected

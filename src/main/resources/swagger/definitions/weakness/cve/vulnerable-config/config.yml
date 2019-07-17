@@ -1,0 +1,15 @@
+type: object
+description: Specifies a vulnerable configuration
+properties:
+  negate:
+    type: boolean
+  operator:
+    $ref: '#/definitions/Operator'
+  cpeMatches:
+    type: array
+    items:
+      $ref: '#/definitions/CPEMatch'
+  children:
+    type: array
+    items:
+      $ref: '#/definitions/Config'

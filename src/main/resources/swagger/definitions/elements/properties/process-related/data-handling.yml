@@ -1,0 +1,7 @@
+type: string
+enum:
+  - Personal Data
+  - Sensitive Data
+  - Both
+  - Other
+  - Not Selected

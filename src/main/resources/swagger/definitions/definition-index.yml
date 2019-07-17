@@ -1,0 +1,246 @@
+# User account data
+User:
+  $include: ./user/user.yml
+
+# Feedback
+Feedback:
+  $include: ./feedback/feedback.yml
+FeedbackType:
+  $include: ./feedback/feedback-type.yml
+# Stroage data included in the BaseDFDModel.
+BaseModelStorageData:
+  $include: ./storage/base-storage-data.yml
+
+# Same as BaseModelStorageData, but also includes a modelID and username.
+# Gets saved so users can be linked to models.
+ModelStorageData:
+  $include: ./storage/storage-data.yml
+
+# Includes all data a user has stored or is linked to
+StoredWork:
+  $include: ./storage/stored-work.yml
+
+# CPEItem defines a software make.
+CPE:
+  $include: ./weakness/cpe/cpe.yml
+CPEReference:
+  $include: ./weakness/cpe/cpe-ref.yml
+
+# Vulnerabilities applying to CPEs.
+CVE:
+  $include: ./weakness/cve/cve.yml
+### CVE specification
+# Information about the affected software
+VendorData:
+  $include: ./weakness/cve/vendor/vendor-data.yml
+Product:
+  $include: ./weakness/cve/vendor/product.yml
+VersionData:
+  $include: ./weakness/cve/vendor/version-data.yml
+# Meta information about the problem
+ProblemType:
+  $include: ./weakness/cve/problem/problem-type.yml
+ProblemTypeDescription:
+  $include: ./weakness/cve/problem/problem-type-description.yml
+# Further information about the vulnerability and possibly mitigation steps
+Reference:
+  $include: ./weakness/cve/reference.yml
+# Contains the description of a vulnerability
+VulnerabilityDescription:
+  $include: ./weakness/cve/vulnerability-description.yml
+# Specifies the affected software configuration by CPEItem
+VulnerableConfiguration:
+  $include: ./weakness/cve/vulnerable-config/vulnerabile-configuration.yml
+Config:
+  $include: ./weakness/cve/vulnerable-config/config.yml
+Operator:
+  $include: ./weakness/cve/vulnerable-config/operator.yml
+CPEMatch:
+  $include: ./weakness/cve/vulnerable-config/cpe-match.yml
+# Specifies the cvss metric of a CVE, describing its impact
+CVSS:
+  $include: ./weakness/cve/cvss/cvss.yml
+CVSSV3Metric:
+  $include: ./weakness/cve/cvss/cvss-v3.yml
+CVSSV2Metric:
+  $include: ./weakness/cve/cvss/cvss-v2.yml
+AttackVector:
+  $include: ./weakness/cve/cvss/attack-vector.yml
+AttackComplexity:
+  $include: ./weakness/cve/cvss/attack-complexity.yml
+RequiredPrivileges:
+  $include: ./weakness/cve/cvss/required-privileges.yml
+UserInteraction:
+  $include: ./weakness/cve/cvss/user-interaction.yml
+Scope:
+  $include: ./weakness/cve/cvss/scope.yml
+Impact:
+  $include: ./weakness/cve/cvss/impact.yml
+
+# STRIDE enum
+STRIDE:
+  $include: ./weakness/stride.yml
+
+# STRIDE threats
+Threat:
+  $include: ./weakness/threat.yml
+
+# Used to set the applicable state of threats
+ApplicableState:
+  $include: ./weakness/applicable-state.yml
+
+# Used to set the priority of threats
+ThreatPriority:
+  $include: ./weakness/threat-priority.yml
+
+# Like Threat, but has an ID
+# Otherwise, every time threats are returned and their applicable state was changed, a new DataSet would be added
+# to the Machine Learning algorithms and thus created a wrongly weighted result
+AppliedThreat:
+  $include: ./weakness/applied-threat.yml
+
+# Dataset used for machine learning
+ThreatDataSet:
+  $include: ./storage/threat-dataset.yml
+
+# DFD model including the storage data, sent from the frontend to be saved...
+BaseDFDModel:
+  $include: ./model/dfd-base.yml
+
+# ...where it's converted to this one, which includes an ID and is stripped of the storage data.
+StoredDFDModel:
+  $include: ./model/dfd-storage.yml
+
+# DFD model which gets analysed.
+AnalysisDFDModel:
+  $include: ./model/dfd-analysis.yml
+
+
+# Used for Storage in DFD models.
+Interactor:
+  $include: ./elements/default/interactor.yml
+Process:
+  $include: ./elements/default/process.yml
+DataStore:
+  $include: ./elements/default/datastore.yml
+DataFlow:
+  $include: ./elements/default/dataflow.yml
+TrustBoundary:
+  $include: ./elements/default/boundary.yml
+
+# Used for DFD analysis. Does not store positioning data.
+AnalysisInteractor:
+  $include: ./elements/analysis/analysis-interactor.yml
+AnalysisProcess:
+  $include: ./elements/analysis/analysis-process.yml
+AnalysisDataStore:
+  $include: ./elements/analysis/analysis-datastore.yml
+AnalysisDataFlow:
+  $include: ./elements/analysis/analysis-dataflow.yml
+AnalysisBoundary:
+  $include: ./elements/analysis/analysis-boundary.yml
+
+# Returned when the Analysis is finished
+AnalysisResult:
+  $include: ./weakness/analysis-result.yml
+
+# Describes the generic element type.
+ElementType:
+  $include: ./elements/properties/type/element-type.yml
+
+# Specifies the type of each element (Web Server, SQL Database, etc.).
+InteractorType:
+  $include: ./elements/properties/type/interactor-type.yml
+ProcessType:
+  $include: ./elements/properties/type/process-type.yml
+DataStoreType:
+  $include: ./elements/properties/type/datastore-type.yml
+DataFlowType:
+  $include: ./elements/properties/type/dataflow-type.yml
+BoundaryType:
+  $include: ./elements/properties/type/boundary-type.yml
+
+# Specifies the generic options for each element.
+InteractorOptions:
+  $include: ./elements/properties/options/interactor-options.yml
+ProcessOptions:
+  $include: ./elements/properties/options/process-options.yml
+DataStoreOptions:
+  $include: ./elements/properties/options/datastore-options.yml
+DataFlowOptions:
+  $include: ./elements/properties/options/dataflow-options.yml
+BoundaryOptions:
+  $include: ./elements/properties/options/boundary-options.yml
+
+# true/false/notSelected for defining the state of some properties.
+GenericSelection:
+  $include: ./elements/properties/options/generic-selection.yml
+
+# low/medium/high/not selected for defining privilege and trust levels
+ScaleSelection:
+  $include: ./elements/properties/options/scale-selection.yml
+
+# Defines an interactor which is a mobile app
+AppType:
+  $include: ./elements/properties/interactor-related/app-type.yml
+
+# Defines the types of data a process handles
+DataHandling:
+  $include: ./elements/properties/process-related/data-handling.yml
+
+# Defines the types of data a process handles
+InputOrigin:
+  $include: ./elements/properties/process-related/input-origin.yml
+
+# Defines the network used by a dataflow
+NetworkType:
+  $include: ./elements/properties/dataflow-related/network-type.yml
+
+#Defines the payload of a dataflow
+PayloadType:
+  $include: ./elements/properties/dataflow-related/payload-type.yml
+
+# X/Y coordinates for positioning elements.
+PointCoordinates:
+  $include: ./elements/properties/point-coordinates.yml
+
+# Contains the id and generic type of an DFD element, property of AnalysisDataFlow. Used during analysis.
+ConnectedElement:
+  $include: ./elements/properties/dataflow-related/connected-element.yml
+
+# Part of DataFlowConnectionInfo, includes basic data and position of an element connected to a dataflow.
+PositionedConnectedElement:
+  $include: ./elements/properties/dataflow-related/positioned-connected-element.yml
+
+# Includes both elements a DataFlow is connected to.
+DataFlowConnectionInfo:
+  $include: ./elements/properties/dataflow-related/connection-info.yml
+
+# Property used in the frontend to specify the DataFlow drawing position.
+DataFlowDrawingPosition:
+  $include: ./elements/properties/dataflow-related/drawing-position.yml
+
+# Minimal Project Data used for creating projects
+BaseProject:
+  $include: ./project/base-project.yml
+# Full project data
+Project:
+  $include: ./project/project.yml
+# Used to link models to projects
+DFDProjectLink:
+  $include: ./project/dfd-project-link.yml
+# Specifies a project id
+ProjectID:
+  $include: ./project/project-id.yml
+# Used when the Project Owner invites users
+InviteRequest:
+  $include: ./project/invite-request.yml
+# Includes all the base information about a project, returned to the User
+Invitation:
+  $include: ./project/invitation.yml
+
+ProfileData:
+  $include: ./profile/profile-data.yml
+UserExists:
+  $include: ./profile/user-exists.yml
+

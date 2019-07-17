@@ -1,0 +1,37 @@
+type: object
+properties:
+  version:
+    type: string
+  vectorString:
+    type: string
+  baseScore:
+    type: number
+    format: float
+  exploitabilityScore:
+    type: number
+    format: float
+  impactScore:
+    type: number
+    format: float
+  acInsufInfo:
+    type: boolean
+  obtainAllPrivilege:
+    type: boolean
+  obtainUserPrivilege:
+    type: boolean
+  obtainOtherPrivilege:
+    type: boolean
+  userInteractionRequired:
+    type: boolean
+  accessVector:
+    type: string
+  accessComplexity:
+    type: string
+  authentication:
+    type: string
+  confidentialityImpact:
+    type: string
+  integrityImpact:
+    type: string
+  availabilityImpact:
+    type: string

@@ -1,0 +1,7 @@
+type: object
+description: Contains both the CVSS v3 and CVSS v2 metric describing a vulnerabilities impact
+properties:
+  cvssv3Metric:
+    $ref: '#/definitions/CVSSV3Metric'
+  cvssv2Metric:
+    $ref: '#/definitions/CVSSV2Metric'

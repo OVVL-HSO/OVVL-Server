@@ -1,0 +1,44 @@
+/profile/info:
+  get:
+    tags:
+    - profile
+    summary: Get profile info
+    description: Get username and email
+    operationId: getProfileInfo
+    produces:
+    - application/json
+    parameters:
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Loaded profile data
+        schema:
+          $ref: '#/definitions/ProfileData'
+      '400':
+        description: Bad Request
+/profile/{username}:
+  get:
+    tags:
+      - profile
+    summary: Check for a username
+    description: Find out if a username exists
+    operationId: checkForUsername
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: username
+        description: Username to look up
+        required: true
+        type: string
+    responses:
+      '200':
+        description: User Exists
+        schema:
+          $ref: '#/definitions/UserExists'
+      '400':
+        description: Bad Request

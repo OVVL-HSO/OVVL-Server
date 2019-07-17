@@ -1,0 +1,15 @@
+springfox.documentation.swagger.v2.path: /api-docs
+server:
+  port: 8080
+spring:
+  data.mongodb.uri: ${MONGODB_CONNECTION}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SUPPORT_MAIL_SENDER}
+    password: ${SUPPORT_MAIL_SENDER_PW}
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+tam.app.jwtSecret: ${OVVL_JWT_SECRET}
+tam.app.jwtExpiration: 86400

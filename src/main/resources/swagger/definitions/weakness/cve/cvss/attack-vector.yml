@@ -1,0 +1,6 @@
+type: string
+enum:
+  - NETWORK
+  - ADJACENT_NETWORK
+  - LOCAL
+  - PHYSICAL

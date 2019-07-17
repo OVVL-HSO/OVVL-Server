@@ -1,0 +1,6 @@
+type: object
+properties:
+  startElement:
+    $ref: '#/definitions/PositionedConnectedElement'
+  endElement:
+    $ref: '#/definitions/PositionedConnectedElement'

@@ -1,0 +1,10 @@
+type: object
+properties:
+  transfersSensitiveData:
+    $ref: '#/definitions/GenericSelection'
+  networkType:
+    $ref: '#/definitions/NetworkType'
+  payload:
+    $ref: '#/definitions/PayloadType'
+  trustedNetwork:
+    $ref: '#/definitions/GenericSelection'

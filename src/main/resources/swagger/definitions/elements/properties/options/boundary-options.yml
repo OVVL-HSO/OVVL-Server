@@ -1,0 +1,8 @@
+type: object
+properties:
+  authenticatesItself:
+    $ref: '#/definitions/GenericSelection'
+  destinationAuthenticated:
+    $ref: '#/definitions/GenericSelection'
+  human:
+    $ref: '#/definitions/GenericSelection'

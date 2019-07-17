@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  type:
+    $ref: '#/definitions/DataStoreType'
+  options:
+    $ref: '#/definitions/DataStoreOptions'
+  cpe:
+    type: string

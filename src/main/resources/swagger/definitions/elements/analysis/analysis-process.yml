@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  type:
+    $ref: '#/definitions/ProcessType'
+  options:
+    $ref: '#/definitions/ProcessOptions'
+  cpe:
+    type: string

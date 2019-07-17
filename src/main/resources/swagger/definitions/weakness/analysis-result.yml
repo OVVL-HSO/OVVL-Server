@@ -1,0 +1,12 @@
+type: object
+properties:
+  modelID:
+    type: string
+  threats:
+    type: array
+    items:
+      $ref: '#/definitions/AppliedThreat'
+  vulnerabilities:
+    type: array
+    items:
+      $ref: '#/definitions/CVE'

@@ -1,0 +1,6 @@
+type: string
+enum:
+  - Anywhere
+  - Interal Network
+  - Local System
+  - Not Selected

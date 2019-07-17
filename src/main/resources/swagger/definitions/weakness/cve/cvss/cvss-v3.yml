@@ -1,0 +1,33 @@
+type: object
+properties:
+  baseScore:
+    type: number
+    format: float
+  exploitabilityScore:
+    type: number
+    format: float
+  impactScore:
+    type: number
+    format: float
+  baseSeverity:
+    type: string
+  version:
+    type: string
+  vectorString:
+    type: string
+  attackVector:
+    $ref: '#/definitions/AttackVector'
+  attackComplexity:
+    $ref: '#/definitions/AttackComplexity'
+  privilegesRequired:
+    $ref: '#/definitions/RequiredPrivileges'
+  userInteraction:
+    $ref: '#/definitions/UserInteraction'
+  scope:
+    $ref: '#/definitions/Scope'
+  confidentialityImpact:
+    $ref: '#/definitions/Impact'
+  integrityImpact:
+    $ref: '#/definitions/Impact'
+  availabilityImpact:
+    $ref: '#/definitions/Impact'

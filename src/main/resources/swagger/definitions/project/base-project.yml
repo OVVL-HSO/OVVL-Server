@@ -1,0 +1,14 @@
+type: object
+properties:
+  title:
+    type: string
+  description:
+    type: string
+  models:
+    type: array
+    items:
+      type: string
+  invites:
+    type: array
+    items:
+      type: string

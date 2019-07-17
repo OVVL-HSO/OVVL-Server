@@ -1,0 +1,6 @@
+type: string
+enum:
+  - Low
+  - Medium
+  - High
+  - Not Selected

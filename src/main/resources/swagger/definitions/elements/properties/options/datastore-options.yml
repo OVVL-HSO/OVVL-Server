@@ -1,0 +1,22 @@
+type: object
+properties:
+  trustLevel:
+    $ref: '#/definitions/ScaleSelection'
+  privilegeLevel:
+    $ref: '#/definitions/ScaleSelection'
+  storesSensitiveData:
+    $ref: '#/definitions/GenericSelection'
+  storesPersonalData:
+    $ref: '#/definitions/GenericSelection'
+  encrypted:
+    $ref: '#/definitions/GenericSelection'
+  removeableStorage:
+    $ref: '#/definitions/GenericSelection'
+  backup:
+    $ref: '#/definitions/GenericSelection'
+  shared:
+    $ref: '#/definitions/GenericSelection'
+  shellEnabled:
+    $ref: '#/definitions/GenericSelection'
+  storesLogs:
+    $ref: '#/definitions/GenericSelection'

@@ -1,0 +1,12 @@
+type: object
+properties:
+  name:
+    type: string
+  projectTitle:
+    type: string
+  summary:
+    type: string
+  screenshot:
+    type: string
+  projectID:
+    type: string

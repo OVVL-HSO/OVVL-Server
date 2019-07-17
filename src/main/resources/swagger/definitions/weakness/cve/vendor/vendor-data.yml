@@ -1,0 +1,9 @@
+type: object
+description: Contains the vendor name and a list of affected products
+properties:
+  vendorName:
+    type: string
+  products:
+    type: array
+    items:
+      $ref: '#/definitions/Product'

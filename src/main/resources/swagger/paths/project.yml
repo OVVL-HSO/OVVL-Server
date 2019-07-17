@@ -1,0 +1,222 @@
+/project/create:
+  post:
+    tags:
+    - project
+    summary: Create a new project
+    description: Create a new project to manage threat models
+    operationId: createProject
+    produces:
+    - application/json
+    parameters:
+    - in: body
+      name: body
+      description: Project Data
+      schema:
+        $ref: '#/definitions/BaseProject'
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Project Created
+      '400':
+        description: Bad Request
+/project/link-model:
+  post:
+    tags:
+    - project
+    summary: Link a model to a project
+    description: Link a saved model to a project
+    operationId: linkModel
+    produces:
+    - application/json
+    parameters:
+    - in: body
+      name: body
+      description: Model Project Link
+      schema:
+        $ref: '#/definitions/DFDProjectLink'
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Linked Models
+      '400':
+        description: Bad Request
+/project/unlink-model:
+  post:
+    tags:
+      - project
+    summary: Unlink a model from a project
+    description: Removes a model from a project, only the model owner can access it after.
+    operationId: unlinkModel
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: Model Project Link
+        schema:
+          $ref: '#/definitions/DFDProjectLink'
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Unlinked Models
+      '400':
+        description: Bad Request
+/project/invite:
+  post:
+    tags:
+    - project
+    summary: Invite a user to a project
+    description: Invites a user to a project
+    operationId: inviteUser
+    produces:
+    - application/json
+    parameters:
+    - in: body
+      name: body
+      description: Invite Data
+      schema:
+        $ref: '#/definitions/InviteRequest'
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Invited User
+      '400':
+        description: Bad Request
+/project/leave/{projectID}:
+  post:
+    tags:
+      - project
+    summary: Leave a project
+    description: Leaves a project
+    operationId: leaveProject
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: projectID
+        description: ID of the project
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Left Project
+      '400':
+        description: Bad Request
+/project/accept-invitation/{invitationID}:
+  post:
+    tags:
+    - project
+    summary: Join a project
+    description: Accept an invitation to a project
+    operationId: acceptInvitation
+    produces:
+    - application/json
+    parameters:
+    - in: path
+      name: invitationID
+      description: ID of the invitation
+      required: true
+      type: string
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Joined Project
+      '400':
+        description: Bad Request
+/project/decline-invitation/{invitationID}:
+  post:
+    tags:
+      - project
+    summary: Join a project
+    description: Decline an invitation to a project
+    operationId: declineInvitation
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: invitationID
+        description: ID of the invitation
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Declined Invitation
+      '400':
+        description: Bad Request
+/project/load:
+  get:
+    tags:
+    - project
+    summary: Load Projects
+    description: Loads all projects a user is part of
+    operationId: loadProjects
+    produces:
+    - application/json
+    parameters:
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Joined Project
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Project'
+      '400':
+        description: Bad Request
+/project/delete/{projectID}:
+  delete:
+    tags:
+    - project
+    summary: Delete a Project
+    description: Delete a Project
+    operationId: deleteProject
+    parameters:
+    - in: path
+      name: projectID
+      description: ID of the saved project
+      required: true
+      type: string
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Deleted Project
+      '400':
+        description: Bad Request

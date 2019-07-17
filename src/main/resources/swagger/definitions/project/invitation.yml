@@ -1,0 +1,18 @@
+type: object
+properties:
+  invitationID:
+    type: string
+  projectID:
+    type: string
+  numberOfCollaborators:
+    type: integer
+  username:
+    type: string
+  owner:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+  invitedAt:
+    type: string

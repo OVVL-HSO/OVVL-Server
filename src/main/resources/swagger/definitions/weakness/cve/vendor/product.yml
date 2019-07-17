@@ -1,0 +1,9 @@
+type: object
+description: Contains product name and the data of all affected versions
+properties:
+  productName:
+    type: string
+  versionData:
+    type: array
+    items:
+      $ref: '#/definitions/VersionData'

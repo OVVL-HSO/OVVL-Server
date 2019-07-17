@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+  threat:
+    $ref: '#/definitions/Threat'
+  startItem:
+    type: object
+    additionalProperties: true
+  endItem:
+    type: object
+    additionalProperties: true
+  dataFlow:
+    type: object
+    additionalProperties: true
+  applicable:
+    type: boolean

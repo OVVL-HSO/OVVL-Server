@@ -1,0 +1,8 @@
+$include: ./feedback.yml
+$include: ./model.yml
+$include: ./auth.yml
+$include: ./product.yml
+$include: ./machine-learning.yml
+$include: ./project.yml
+$include: ./profile.yml
+$include: ./storage.yml

@@ -1,0 +1,15 @@
+type: object
+description: Specifies the affected CPEs
+properties:
+  vulnerable:
+    type: boolean
+  cpe23URI:
+    type: string
+  versionStartIncluding:
+    type: string
+  versionStartExcluding:
+    type: string
+  versionEndIncluding:
+    type: string
+  versionEndExcluding:
+    type: string

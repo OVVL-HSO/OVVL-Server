@@ -1,0 +1,8 @@
+type: string
+enum:
+  - Bug
+  - Feedback
+  - Feature Request
+  - Suggestion
+  - Question
+  - Other

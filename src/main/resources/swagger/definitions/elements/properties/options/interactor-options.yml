@@ -1,0 +1,14 @@
+type: object
+properties:
+  trustLevel:
+    $ref: '#/definitions/ScaleSelection'
+  privilegeLevel:
+    $ref: '#/definitions/ScaleSelection'
+  sanitizesInput:
+    $ref: '#/definitions/GenericSelection'
+  employee:
+    $ref: '#/definitions/GenericSelection'
+  accessible:
+    $ref: '#/definitions/GenericSelection'
+  appType:
+    $ref: '#/definitions/AppType'

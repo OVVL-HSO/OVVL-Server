@@ -1,0 +1,11 @@
+type: string
+enum:
+  - Generic Data Store
+  - SQL Database
+  - NoSQL Database
+  - Cookies
+  - Session Storage
+  - Cloud Storage
+  - Device
+  - File
+  - Cache

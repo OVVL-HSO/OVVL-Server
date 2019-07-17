@@ -1,0 +1,18 @@
+/feedback:
+  post:
+    tags:
+      - feedback
+    summary: Provide feedback
+    description: Send feedback, questions or bug reports to the developer
+    operationId: feedback
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: Feedback
+        schema:
+          $ref: '#/definitions/Feedback'
+    responses:
+      '200':
+        description: Feedback provided

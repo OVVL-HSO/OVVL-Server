@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  type:
+    $ref: '#/definitions/InteractorType'
+  options:
+    $ref: '#/definitions/InteractorOptions'
+  cpe:
+    type: string

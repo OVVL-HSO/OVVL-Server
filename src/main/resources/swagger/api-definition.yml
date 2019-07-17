@@ -1,0 +1,24 @@
+#########################################################
+# The actual definition used to generate the API        #
+# can be found at ./api-definition.inc.yml. It's        #
+# automatically generated from this file by yamlinc.    #
+#                                                       #
+#      https://github.com/javanile/yamlinc              #
+#                                                       #
+# Here, the specification is written and then generated #
+# with:                                                 #
+# yamlinc src/main/resources/swagger/api-definition.yml #
+#########################################################
+
+swagger: '2.0'
+info:
+  description: Server to manage and analyze Threat Models
+  version: 1.0.0
+  title: Threat Model Assessment App
+tags:
+  - name: threat-model
+    description: OVVLs Server for the creation, storage and analysis of threat models
+paths:
+  $include: ./paths/path-index.yml
+definitions:
+  $include: ./definitions/definition-index.yml

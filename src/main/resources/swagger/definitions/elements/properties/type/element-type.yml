@@ -1,0 +1,7 @@
+type: string
+enum:
+  - process
+  - interactor
+  - datastore
+  - dataflow
+  - trustboundary

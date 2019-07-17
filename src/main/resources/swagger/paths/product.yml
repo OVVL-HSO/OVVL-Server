@@ -1,0 +1,48 @@
+/software/find:
+  get:
+    tags:
+      - vulnerabilitiy
+    summary: Find a list of cpes
+    description: Find a list of cpes containing the query string
+    operationId: findCPEs
+    parameters:
+      - in: query
+        name: query
+        required: true
+        description: cpe query
+        type: string
+    responses:
+      "200":
+        description: Found cpes
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/CPE"
+      "400":
+        description: Bad request
+      "404":
+        description: No cpes found
+/software/vulnerabilities:
+  get:
+    tags:
+      - vulnerabilitiy
+    summary: Get a list of vulnerabilities for a list of cpes
+    description: Find a list of threats that affect a list of cpes
+    operationId: findVulnerabilitiesForAListOfCPEs
+    parameters:
+      - in: query
+        name: cpes
+        required: true
+        description: array of cpes
+        type: array
+        items:
+          type: string
+    responses:
+      "200":
+        description: Found threats
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/CVE"
+      "400":
+        description: Bad request

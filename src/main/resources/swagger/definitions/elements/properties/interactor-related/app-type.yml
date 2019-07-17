@@ -1,0 +1,7 @@
+type: string
+enum:
+  - Native
+  - Cross-Platform
+  - Hybrid
+  - Progressive Web App
+  - Not Selected

@@ -1,0 +1,12 @@
+type: object
+properties:
+  strideCategory:
+    $ref: '#/definitions/STRIDE'
+  title:
+    type: string
+  description:
+    type: string
+  affectedElements:
+    type: array
+    items:
+      type: string

@@ -1,0 +1,24 @@
+type: object
+properties:
+  modelID:
+    type: string
+  interactors:
+    type: array
+    items:
+      $ref: '#/definitions/Interactor'
+  dataFlows:
+    type: array
+    items:
+      $ref: '#/definitions/DataFlow'
+  dataStores:
+    type: array
+    items:
+      $ref: '#/definitions/DataStore'
+  processes:
+    type: array
+    items:
+      $ref: '#/definitions/Process'
+  trustBoundaries:
+    type: array
+    items:
+      $ref: '#/definitions/TrustBoundary'

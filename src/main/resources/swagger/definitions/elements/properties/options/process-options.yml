@@ -1,0 +1,24 @@
+type: object
+properties:
+  trustLevel:
+    $ref: '#/definitions/ScaleSelection'
+  privilegeLevel:
+    $ref: '#/definitions/ScaleSelection'
+  managed:
+    $ref: '#/definitions/GenericSelection'
+  dataHandling:
+    $ref: '#/definitions/DataHandling'
+  inputOrigin:
+    $ref: '#/definitions/InputOrigin'
+  sanitizesInput:
+    $ref: '#/definitions/GenericSelection'
+  validatesInput:
+    $ref: '#/definitions/GenericSelection'
+  requiresAuthentication:
+    $ref: '#/definitions/GenericSelection'
+  authenticatesItself:
+    $ref: '#/definitions/GenericSelection'
+  ddosProtection:
+    $ref: '#/definitions/GenericSelection'
+  customCommunicationProtocol:
+    $ref: '#/definitions/GenericSelection'

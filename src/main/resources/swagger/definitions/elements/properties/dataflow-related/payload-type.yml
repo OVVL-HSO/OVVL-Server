@@ -1,0 +1,8 @@
+type: string
+enum:
+  - JSON
+  - XML
+  - Query String
+  - SOAP
+  - Other
+  - Not Selected

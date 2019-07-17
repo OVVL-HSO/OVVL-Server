@@ -1,0 +1,35 @@
+type: object
+description: Contains all data available for a vulnerability
+properties:
+  cveID:
+    type: string
+  assigner:
+    type: string
+  dataFormat:
+    type: string
+  dataVersion:
+    type: string
+  publishedDate:
+    type: string
+  lastModifiedDate:
+    type: string
+  affects:
+    type: array
+    items:
+      $ref: '#/definitions/VendorData'
+  problemTypes:
+    type: array
+    items:
+      $ref: '#/definitions/ProblemType'
+  references:
+    type: array
+    items:
+      $ref: '#/definitions/Reference'
+  descriptions:
+    type: array
+    items:
+      $ref: '#/definitions/VulnerabilityDescription'
+  vulnerableConfig:
+    $ref: '#/definitions/VulnerableConfiguration'
+  cvss:
+    $ref: '#/definitions/CVSS'

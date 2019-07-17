@@ -1,0 +1,129 @@
+/model/save:
+  post:
+    tags:
+      - model
+    summary: Save dfd models
+    description: Save dfd models from the frontend
+    operationId: saveDFDModel
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: DFD Model
+        schema:
+          $ref: '#/definitions/BaseDFDModel'
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '201':
+        description: Saved DFD model
+      '400':
+        description: Incorrect message format
+/model/delete/{modelID}:
+  delete:
+    tags:
+      - model
+    summary: Delete a dfd model
+    description: Deletes a dfd model by id
+    operationId: delete dfd model
+    parameters:
+      - in: path
+        name: modelID
+        description: ID of the saved model
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '201':
+        description: Deleted DFD model
+      '400':
+        description: Bad Request
+/model/threat-update:
+  post:
+    tags:
+      - model
+    summary: Update threat properties
+    description: Update threat properties to set applicable state and priority
+    operationId: updateThreatData
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Threat Data
+        schema:
+          $ref: '#/definitions/AppliedThreat'
+    responses:
+      '200':
+        description: Updated threat successfully
+      '401':
+        description: Unauthorized
+/model/analyze:
+  post:
+    tags:
+      - model
+    summary: Analyze a threat model
+    description: Return the analysis of a threat model
+    operationId: analyzeThreatModel
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: Threat Model
+        schema:
+          $ref: '#/definitions/AnalysisDFDModel'
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Analysis successful
+        schema:
+          $ref: '#/definitions/AnalysisResult'
+      '401':
+        description: Unauthorized
+/model/{modelID}:
+  get:
+    tags:
+      - model
+    summary: Load a specific model
+    description: Loads a model previously saved by a user
+    operationId: loadModel
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: modelID
+        description: ID of the saved model
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Found model
+        schema:
+          $ref: '#/definitions/StoredDFDModel'
+      '400':
+        description: Bad request
+      '404':
+        description: No model found

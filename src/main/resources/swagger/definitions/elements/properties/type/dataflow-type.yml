@@ -1,0 +1,14 @@
+type: string
+enum:
+  - Generic Data Flow
+  - HTTP
+  - HTTPS
+  - TCP/IP
+  - UDP
+  - IPSec
+  - MQTT
+  - FTP
+  - SSH
+  - SMTP
+  - Custom
+  - Binary

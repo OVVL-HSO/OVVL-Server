@@ -1,0 +1,10 @@
+type: string
+enum:
+  - Generic Process
+  - Web Server
+  - Virtual Machine
+  - Thick Client
+  - Thin Client
+  - Thread
+  - Application
+  - Web Service

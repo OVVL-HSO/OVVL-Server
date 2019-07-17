@@ -1,0 +1,6 @@
+type: object
+properties:
+  projectID:
+    type: string
+  username:
+    type: string

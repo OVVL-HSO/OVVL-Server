@@ -1,0 +1,16 @@
+/machine-learning/data:
+  get:
+    tags:
+      - machine learning
+    summary: Get all datasets
+    description: Returns all datasets available for further processing
+    operationId: getMLData
+    responses:
+      "200":
+        description: Found ML Datasets
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/ThreatDataSet"
+      "400":
+        description: Bad request

@@ -1,0 +1,11 @@
+allOf:
+  - $ref: '#/definitions/Threat'
+  - type: object
+    properties:
+      threatID:
+        type: string
+      applicable:
+        $ref: '#/definitions/ApplicableState'
+      priority:
+        $ref: '#/definitions/ThreatPriority'
+

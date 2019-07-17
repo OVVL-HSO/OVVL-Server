@@ -1,0 +1,7 @@
+type: string
+enum:
+  - Generic Trust Boundary
+  - Internal Network
+  - External Network
+  - Physical Boundary
+  - Local System

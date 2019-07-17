@@ -1,0 +1,9 @@
+type: object
+description: Contains the data specifying the affected software configurations by CPE
+properties:
+  cveDataVersion:
+    type: string
+  configs:
+    type: array
+    items:
+      $ref: '#/definitions/Config'

@@ -1,0 +1,7 @@
+type: object
+description: Contains the version data of an affected product
+properties:
+  versionValue:
+    type: string
+  versionAffected:
+    type: string

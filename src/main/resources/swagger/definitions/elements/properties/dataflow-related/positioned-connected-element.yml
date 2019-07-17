@@ -1,0 +1,6 @@
+allOf:
+  - $ref: '#/definitions/ConnectedElement'
+  - type: object
+    properties:
+      coordinates:
+        $ref: '#/definitions/PointCoordinates'

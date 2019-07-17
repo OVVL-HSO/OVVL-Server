@@ -1,0 +1,12 @@
+type: string
+enum:
+  - Generic Interactor
+  - Web Application
+  - Mobile Application
+  - Human
+  - Browser
+  - IoT Gateway
+  - Sensor
+  - Operating System
+  - External System
+  - External API

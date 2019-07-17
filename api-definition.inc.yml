@@ -1,0 +1,1600 @@
+## --------------------
+## DON'T EDIT THIS FILE
+## --------------------
+## Engine: yamlinc@0.1.8
+## Source: src/main/resources/swagger/api-definition.yml
+
+swagger: '2.0'
+info:
+  description: Server to manage and analyze Threat Models
+  version: 1.0.0
+  title: Threat Model Assessment App
+tags:
+  - name: threat-model
+    description: 'OVVLs Server for the creation, storage and analysis of threat models'
+paths:
+  /feedback:
+    post:
+      tags:
+        - feedback
+      summary: Provide feedback
+      description: 'Send feedback, questions or bug reports to the developer'
+      operationId: feedback
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Feedback
+          schema:
+            $ref: '#/definitions/Feedback'
+      responses:
+        '200':
+          description: Feedback provided
+  /model/save:
+    post:
+      tags:
+        - model
+      summary: Save dfd models
+      description: Save dfd models from the frontend
+      operationId: saveDFDModel
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: DFD Model
+          schema:
+            $ref: '#/definitions/BaseDFDModel'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Saved DFD model
+        '400':
+          description: Incorrect message format
+  '/model/delete/{modelID}':
+    delete:
+      tags:
+        - model
+      summary: Delete a dfd model
+      description: Deletes a dfd model by id
+      operationId: delete dfd model
+      parameters:
+        - in: path
+          name: modelID
+          description: ID of the saved model
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Deleted DFD model
+        '400':
+          description: Bad Request
+  /model/threat-update:
+    post:
+      tags:
+        - model
+      summary: Update threat properties
+      description: Update threat properties to set applicable state and priority
+      operationId: updateThreatData
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Threat Data
+          schema:
+            $ref: '#/definitions/AppliedThreat'
+      responses:
+        '200':
+          description: Updated threat successfully
+        '401':
+          description: Unauthorized
+  /model/analyze:
+    post:
+      tags:
+        - model
+      summary: Analyze a threat model
+      description: Return the analysis of a threat model
+      operationId: analyzeThreatModel
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Threat Model
+          schema:
+            $ref: '#/definitions/AnalysisDFDModel'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Analysis successful
+          schema:
+            $ref: '#/definitions/AnalysisResult'
+        '401':
+          description: Unauthorized
+  '/model/{modelID}':
+    get:
+      tags:
+        - model
+      summary: Load a specific model
+      description: Loads a model previously saved by a user
+      operationId: loadModel
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: modelID
+          description: ID of the saved model
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Found model
+          schema:
+            $ref: '#/definitions/StoredDFDModel'
+        '400':
+          description: Bad request
+        '404':
+          description: No model found
+  /auth/signin:
+    post:
+      tags:
+        - authentication
+      summary: Sign into OVVL
+      description: Returns an authoriztaion token to make authorized requests
+      operationId: signIn
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User Credentials
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: Signed In
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+  /auth/signup:
+    post:
+      tags:
+        - authentication
+      summary: Sign up for OVVL
+      description: Creates an user account
+      operationId: signUp
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User Credentials
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: Signed Up
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+  /software/find:
+    get:
+      tags:
+        - vulnerabilitiy
+      summary: Find a list of cpes
+      description: Find a list of cpes containing the query string
+      operationId: findCPEs
+      parameters:
+        - in: query
+          name: query
+          required: true
+          description: cpe query
+          type: string
+      responses:
+        '200':
+          description: Found cpes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CPE'
+        '400':
+          description: Bad request
+        '404':
+          description: No cpes found
+  /software/vulnerabilities:
+    get:
+      tags:
+        - vulnerabilitiy
+      summary: Get a list of vulnerabilities for a list of cpes
+      description: Find a list of threats that affect a list of cpes
+      operationId: findVulnerabilitiesForAListOfCPEs
+      parameters:
+        - in: query
+          name: cpes
+          required: true
+          description: array of cpes
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Found threats
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CVE'
+        '400':
+          description: Bad request
+  /machine-learning/data:
+    get:
+      tags:
+        - machine learning
+      summary: Get all datasets
+      description: Returns all datasets available for further processing
+      operationId: getMLData
+      responses:
+        '200':
+          description: Found ML Datasets
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ThreatDataSet'
+        '400':
+          description: Bad request
+  /project/create:
+    post:
+      tags:
+        - project
+      summary: Create a new project
+      description: Create a new project to manage threat models
+      operationId: createProject
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Project Data
+          schema:
+            $ref: '#/definitions/BaseProject'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Project Created
+        '400':
+          description: Bad Request
+  /project/link-model:
+    post:
+      tags:
+        - project
+      summary: Link a model to a project
+      description: Link a saved model to a project
+      operationId: linkModel
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Model Project Link
+          schema:
+            $ref: '#/definitions/DFDProjectLink'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Linked Models
+        '400':
+          description: Bad Request
+  /project/unlink-model:
+    post:
+      tags:
+        - project
+      summary: Unlink a model from a project
+      description: >-
+        Removes a model from a project, only the model owner can access it
+        after.
+      operationId: unlinkModel
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Model Project Link
+          schema:
+            $ref: '#/definitions/DFDProjectLink'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Unlinked Models
+        '400':
+          description: Bad Request
+  /project/invite:
+    post:
+      tags:
+        - project
+      summary: Invite a user to a project
+      description: Invites a user to a project
+      operationId: inviteUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Invite Data
+          schema:
+            $ref: '#/definitions/InviteRequest'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Invited User
+        '400':
+          description: Bad Request
+  '/project/leave/{projectID}':
+    post:
+      tags:
+        - project
+      summary: Leave a project
+      description: Leaves a project
+      operationId: leaveProject
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: projectID
+          description: ID of the project
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Left Project
+        '400':
+          description: Bad Request
+  '/project/accept-invitation/{invitationID}':
+    post:
+      tags:
+        - project
+      summary: Join a project
+      description: Accept an invitation to a project
+      operationId: acceptInvitation
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: invitationID
+          description: ID of the invitation
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Joined Project
+        '400':
+          description: Bad Request
+  '/project/decline-invitation/{invitationID}':
+    post:
+      tags:
+        - project
+      summary: Join a project
+      description: Decline an invitation to a project
+      operationId: declineInvitation
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: invitationID
+          description: ID of the invitation
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Declined Invitation
+        '400':
+          description: Bad Request
+  /project/load:
+    get:
+      tags:
+        - project
+      summary: Load Projects
+      description: Loads all projects a user is part of
+      operationId: loadProjects
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Joined Project
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Project'
+        '400':
+          description: Bad Request
+  '/project/delete/{projectID}':
+    delete:
+      tags:
+        - project
+      summary: Delete a Project
+      description: Delete a Project
+      operationId: deleteProject
+      parameters:
+        - in: path
+          name: projectID
+          description: ID of the saved project
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Deleted Project
+        '400':
+          description: Bad Request
+  /profile/info:
+    get:
+      tags:
+        - profile
+      summary: Get profile info
+      description: Get username and email
+      operationId: getProfileInfo
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Loaded profile data
+          schema:
+            $ref: '#/definitions/ProfileData'
+        '400':
+          description: Bad Request
+  '/profile/{username}':
+    get:
+      tags:
+        - profile
+      summary: Check for a username
+      description: Find out if a username exists
+      operationId: checkForUsername
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          description: Username to look up
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User Exists
+          schema:
+            $ref: '#/definitions/UserExists'
+        '400':
+          description: Bad Request
+  /storage/model:
+    get:
+      tags:
+        - storage
+      summary: Find all models linked to a user
+      description: Returns the Metadata of all models linked to a user
+      operationId: findModels
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Found models
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ModelStorageData'
+        '400':
+          description: Bad request
+        '404':
+          description: No models found
+  /storage/invites:
+    get:
+      tags:
+        - storage
+      summary: Loads Invites
+      description: Returns all invites linked to a user
+      operationId: getInvites
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Found Invites
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Invitation'
+        '400':
+          description: Bad request
+        '404':
+          description: No models found
+  /storage/work:
+    get:
+      tags:
+        - storage
+      summary: 'Load stored model data, projects, and invites.'
+      description: 'Returns al stored model meta data, projects and invites linked to a user'
+      operationId: findStoredWork
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Loaded Storage Data
+          schema:
+            $ref: '#/definitions/StoredWork'
+        '400':
+          description: Bad request
+        '404':
+          description: Nothing found
+definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  Feedback:
+    type: object
+    properties:
+      date:
+        type: string
+        maximum: 25
+      message:
+        type: string
+        maximum: 500
+      type:
+        $ref: '#/definitions/FeedbackType'
+      contactMail:
+        type: string
+        maximum: 50
+  FeedbackType:
+    type: string
+    enum:
+      - Bug
+      - Feedback
+      - Feature Request
+      - Suggestion
+      - Question
+      - Other
+  BaseModelStorageData:
+    type: object
+    properties:
+      name:
+        type: string
+      projectTitle:
+        type: string
+      summary:
+        type: string
+      screenshot:
+        type: string
+      projectID:
+        type: string
+  ModelStorageData:
+    allOf:
+      - $ref: '#/definitions/BaseModelStorageData'
+      - type: object
+        properties:
+          modelID:
+            type: string
+          date:
+            type: string
+          editedDate:
+            type: string
+          owner:
+            type: string
+  StoredWork:
+    type: object
+    properties:
+      models:
+        type: array
+        items:
+          $ref: '#/definitions/ModelStorageData'
+      projects:
+        type: array
+        items:
+          $ref: '#/definitions/Project'
+  CPE:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      title:
+        type: string
+      references:
+        type: array
+        items:
+          $ref: '#/definitions/CPEReference'
+      cpeName:
+        type: string
+      cpe23Name:
+        type: string
+  CPEReference:
+    type: object
+    properties:
+      referenceType:
+        type: string
+      referenceContent:
+        type: string
+  CVE:
+    type: object
+    description: Contains all data available for a vulnerability
+    properties:
+      cveID:
+        type: string
+      assigner:
+        type: string
+      dataFormat:
+        type: string
+      dataVersion:
+        type: string
+      publishedDate:
+        type: string
+      lastModifiedDate:
+        type: string
+      affects:
+        type: array
+        items:
+          $ref: '#/definitions/VendorData'
+      problemTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ProblemType'
+      references:
+        type: array
+        items:
+          $ref: '#/definitions/Reference'
+      descriptions:
+        type: array
+        items:
+          $ref: '#/definitions/VulnerabilityDescription'
+      vulnerableConfig:
+        $ref: '#/definitions/VulnerableConfiguration'
+      cvss:
+        $ref: '#/definitions/CVSS'
+  VendorData:
+    type: object
+    description: Contains the vendor name and a list of affected products
+    properties:
+      vendorName:
+        type: string
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+  Product:
+    type: object
+    description: Contains product name and the data of all affected versions
+    properties:
+      productName:
+        type: string
+      versionData:
+        type: array
+        items:
+          $ref: '#/definitions/VersionData'
+  VersionData:
+    type: object
+    description: Contains the version data of an affected product
+    properties:
+      versionValue:
+        type: string
+      versionAffected:
+        type: string
+  ProblemType:
+    type: object
+    description: Contains a list of problem type meta data
+    properties:
+      descriptions:
+        type: array
+        items:
+          $ref: '#/definitions/ProblemTypeDescription'
+  ProblemTypeDescription:
+    type: object
+    description: Specifies a vulnerabilities language and cweID
+    properties:
+      language:
+        type: string
+      cweID:
+        type: string
+  Reference:
+    type: object
+    description: >-
+      Contains further information about a vulnerability and sometimes
+      mitigation suggestions
+    properties:
+      url:
+        type: string
+      name:
+        type: string
+      refSource:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+  VulnerabilityDescription:
+    type: object
+    description: Contains the description of a vulnerability
+    properties:
+      language:
+        type: string
+      content:
+        type: string
+  VulnerableConfiguration:
+    type: object
+    description: Contains the data specifying the affected software configurations by CPE
+    properties:
+      cveDataVersion:
+        type: string
+      configs:
+        type: array
+        items:
+          $ref: '#/definitions/Config'
+  Config:
+    type: object
+    description: Specifies a vulnerable configuration
+    properties:
+      negate:
+        type: boolean
+      operator:
+        $ref: '#/definitions/Operator'
+      cpeMatches:
+        type: array
+        items:
+          $ref: '#/definitions/CPEMatch'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Config'
+  Operator:
+    type: string
+    enum:
+      - OR
+      - AND
+  CPEMatch:
+    type: object
+    description: Specifies the affected CPEs
+    properties:
+      vulnerable:
+        type: boolean
+      cpe23URI:
+        type: string
+      versionStartIncluding:
+        type: string
+      versionStartExcluding:
+        type: string
+      versionEndIncluding:
+        type: string
+      versionEndExcluding:
+        type: string
+  CVSS:
+    type: object
+    description: >-
+      Contains both the CVSS v3 and CVSS v2 metric describing a vulnerabilities
+      impact
+    properties:
+      cvssv3Metric:
+        $ref: '#/definitions/CVSSV3Metric'
+      cvssv2Metric:
+        $ref: '#/definitions/CVSSV2Metric'
+  CVSSV3Metric:
+    type: object
+    properties:
+      baseScore:
+        type: number
+        format: float
+      exploitabilityScore:
+        type: number
+        format: float
+      impactScore:
+        type: number
+        format: float
+      baseSeverity:
+        type: string
+      version:
+        type: string
+      vectorString:
+        type: string
+      attackVector:
+        $ref: '#/definitions/AttackVector'
+      attackComplexity:
+        $ref: '#/definitions/AttackComplexity'
+      privilegesRequired:
+        $ref: '#/definitions/RequiredPrivileges'
+      userInteraction:
+        $ref: '#/definitions/UserInteraction'
+      scope:
+        $ref: '#/definitions/Scope'
+      confidentialityImpact:
+        $ref: '#/definitions/Impact'
+      integrityImpact:
+        $ref: '#/definitions/Impact'
+      availabilityImpact:
+        $ref: '#/definitions/Impact'
+  CVSSV2Metric:
+    type: object
+    properties:
+      version:
+        type: string
+      vectorString:
+        type: string
+      baseScore:
+        type: number
+        format: float
+      exploitabilityScore:
+        type: number
+        format: float
+      impactScore:
+        type: number
+        format: float
+      acInsufInfo:
+        type: boolean
+      obtainAllPrivilege:
+        type: boolean
+      obtainUserPrivilege:
+        type: boolean
+      obtainOtherPrivilege:
+        type: boolean
+      userInteractionRequired:
+        type: boolean
+      accessVector:
+        type: string
+      accessComplexity:
+        type: string
+      authentication:
+        type: string
+      confidentialityImpact:
+        type: string
+      integrityImpact:
+        type: string
+      availabilityImpact:
+        type: string
+  AttackVector:
+    type: string
+    enum:
+      - NETWORK
+      - ADJACENT_NETWORK
+      - LOCAL
+      - PHYSICAL
+  AttackComplexity:
+    type: string
+    enum:
+      - LOW
+      - HIGH
+  RequiredPrivileges:
+    type: string
+    enum:
+      - NONE
+      - LOW
+      - HIGH
+  UserInteraction:
+    type: string
+    enum:
+      - NONE
+      - REQUIRED
+  Scope:
+    type: string
+    enum:
+      - CHANGED
+      - UNCHANGED
+  Impact:
+    type: string
+    enum:
+      - NONE
+      - LOW
+      - HIGH
+  STRIDE:
+    type: string
+    enum:
+      - Spoofing
+      - Tampering
+      - Repudiation
+      - Information Disclosure
+      - Denial Of Service
+      - Elevation Of Privilege
+  Threat:
+    type: object
+    properties:
+      strideCategory:
+        $ref: '#/definitions/STRIDE'
+      title:
+        type: string
+      description:
+        type: string
+      affectedElements:
+        type: array
+        items:
+          type: string
+  ApplicableState:
+    type: string
+    enum:
+      - Not Selected
+      - Applicable
+      - Not Applicable
+  ThreatPriority:
+    type: string
+    enum:
+      - unspecified
+      - low
+      - medium
+      - high
+  AppliedThreat:
+    allOf:
+      - $ref: '#/definitions/Threat'
+      - type: object
+        properties:
+          threatID:
+            type: string
+          applicable:
+            $ref: '#/definitions/ApplicableState'
+          priority:
+            $ref: '#/definitions/ThreatPriority'
+  ThreatDataSet:
+    type: object
+    properties:
+      id:
+        type: string
+      threat:
+        $ref: '#/definitions/Threat'
+      startItem:
+        type: object
+        additionalProperties: true
+      endItem:
+        type: object
+        additionalProperties: true
+      dataFlow:
+        type: object
+        additionalProperties: true
+      applicable:
+        type: boolean
+  BaseDFDModel:
+    type: object
+    properties:
+      interactors:
+        type: array
+        items:
+          $ref: '#/definitions/Interactor'
+      dataFlows:
+        type: array
+        items:
+          $ref: '#/definitions/DataFlow'
+      dataStores:
+        type: array
+        items:
+          $ref: '#/definitions/DataStore'
+      processes:
+        type: array
+        items:
+          $ref: '#/definitions/Process'
+      trustBoundaries:
+        type: array
+        items:
+          $ref: '#/definitions/TrustBoundary'
+      storageData:
+        $ref: '#/definitions/BaseModelStorageData'
+  StoredDFDModel:
+    type: object
+    properties:
+      modelID:
+        type: string
+      interactors:
+        type: array
+        items:
+          $ref: '#/definitions/Interactor'
+      dataFlows:
+        type: array
+        items:
+          $ref: '#/definitions/DataFlow'
+      dataStores:
+        type: array
+        items:
+          $ref: '#/definitions/DataStore'
+      processes:
+        type: array
+        items:
+          $ref: '#/definitions/Process'
+      trustBoundaries:
+        type: array
+        items:
+          $ref: '#/definitions/TrustBoundary'
+  AnalysisDFDModel:
+    type: object
+    properties:
+      modelID:
+        type: string
+      interactors:
+        type: array
+        items:
+          $ref: '#/definitions/AnalysisInteractor'
+      dataFlows:
+        type: array
+        items:
+          $ref: '#/definitions/AnalysisDataFlow'
+      dataStores:
+        type: array
+        items:
+          $ref: '#/definitions/AnalysisDataStore'
+      processes:
+        type: array
+        items:
+          $ref: '#/definitions/AnalysisProcess'
+      boundaries:
+        type: array
+        items:
+          $ref: '#/definitions/AnalysisBoundary'
+  Interactor:
+    allOf:
+      - $ref: '#/definitions/AnalysisInteractor'
+      - type: object
+        properties:
+          ip:
+            type: string
+          coordinates:
+            $ref: '#/definitions/PointCoordinates'
+          genericType:
+            $ref: '#/definitions/ElementType'
+          cpe:
+            $ref: '#/definitions/CPE'
+          connectedToDataFlow:
+            type: boolean
+  Process:
+    allOf:
+      - $ref: '#/definitions/AnalysisProcess'
+      - type: object
+        properties:
+          ip:
+            type: string
+          coordinates:
+            $ref: '#/definitions/PointCoordinates'
+          genericType:
+            $ref: '#/definitions/ElementType'
+          cpe:
+            $ref: '#/definitions/CPE'
+          connectedToDataFlow:
+            type: boolean
+  DataStore:
+    allOf:
+      - $ref: '#/definitions/AnalysisDataStore'
+      - type: object
+        properties:
+          ip:
+            type: string
+          coordinates:
+            $ref: '#/definitions/PointCoordinates'
+          genericType:
+            $ref: '#/definitions/ElementType'
+          cpe:
+            $ref: '#/definitions/CPE'
+          connectedToDataFlow:
+            type: boolean
+  DataFlow:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      connectedElements:
+        $ref: '#/definitions/DataFlowConnectionInfo'
+      position:
+        $ref: '#/definitions/DataFlowDrawingPosition'
+      type:
+        $ref: '#/definitions/DataFlowType'
+      options:
+        $ref: '#/definitions/DataFlowOptions'
+      genericType:
+        $ref: '#/definitions/ElementType'
+      cpe:
+        $ref: '#/definitions/CPE'
+  TrustBoundary:
+    allOf:
+      - $ref: '#/definitions/AnalysisBoundary'
+      - type: object
+        properties:
+          coordinates:
+            $ref: '#/definitions/PointCoordinates'
+          width:
+            type: number
+          height:
+            type: number
+          genericType:
+            $ref: '#/definitions/ElementType'
+  AnalysisInteractor:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/InteractorType'
+      options:
+        $ref: '#/definitions/InteractorOptions'
+      cpe:
+        type: string
+  AnalysisProcess:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/ProcessType'
+      options:
+        $ref: '#/definitions/ProcessOptions'
+      cpe:
+        type: string
+  AnalysisDataStore:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/DataStoreType'
+      options:
+        $ref: '#/definitions/DataStoreOptions'
+      cpe:
+        type: string
+  AnalysisDataFlow:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      startElement:
+        $ref: '#/definitions/ConnectedElement'
+      endElement:
+        $ref: '#/definitions/ConnectedElement'
+      type:
+        $ref: '#/definitions/DataFlowType'
+      options:
+        $ref: '#/definitions/DataFlowOptions'
+      cpe:
+        type: string
+  AnalysisBoundary:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/BoundaryType'
+      options:
+        $ref: '#/definitions/BoundaryOptions'
+  AnalysisResult:
+    type: object
+    properties:
+      modelID:
+        type: string
+      threats:
+        type: array
+        items:
+          $ref: '#/definitions/AppliedThreat'
+      vulnerabilities:
+        type: array
+        items:
+          $ref: '#/definitions/CVE'
+  ElementType:
+    type: string
+    enum:
+      - process
+      - interactor
+      - datastore
+      - dataflow
+      - trustboundary
+  InteractorType:
+    type: string
+    enum:
+      - Generic Interactor
+      - Web Application
+      - Mobile Application
+      - Human
+      - Browser
+      - IoT Gateway
+      - Sensor
+      - Operating System
+      - External System
+      - External API
+  ProcessType:
+    type: string
+    enum:
+      - Generic Process
+      - Web Server
+      - Virtual Machine
+      - Thick Client
+      - Thin Client
+      - Thread
+      - Application
+      - Web Service
+  DataStoreType:
+    type: string
+    enum:
+      - Generic Data Store
+      - SQL Database
+      - NoSQL Database
+      - Cookies
+      - Session Storage
+      - Cloud Storage
+      - Device
+      - File
+      - Cache
+  DataFlowType:
+    type: string
+    enum:
+      - Generic Data Flow
+      - HTTP
+      - HTTPS
+      - TCP/IP
+      - UDP
+      - IPSec
+      - MQTT
+      - FTP
+      - SSH
+      - SMTP
+      - Custom
+      - Binary
+  BoundaryType:
+    type: string
+    enum:
+      - Generic Trust Boundary
+      - Internal Network
+      - External Network
+      - Physical Boundary
+      - Local System
+  InteractorOptions:
+    type: object
+    properties:
+      trustLevel:
+        $ref: '#/definitions/ScaleSelection'
+      privilegeLevel:
+        $ref: '#/definitions/ScaleSelection'
+      sanitizesInput:
+        $ref: '#/definitions/GenericSelection'
+      employee:
+        $ref: '#/definitions/GenericSelection'
+      accessible:
+        $ref: '#/definitions/GenericSelection'
+      appType:
+        $ref: '#/definitions/AppType'
+  ProcessOptions:
+    type: object
+    properties:
+      trustLevel:
+        $ref: '#/definitions/ScaleSelection'
+      privilegeLevel:
+        $ref: '#/definitions/ScaleSelection'
+      managed:
+        $ref: '#/definitions/GenericSelection'
+      dataHandling:
+        $ref: '#/definitions/DataHandling'
+      inputOrigin:
+        $ref: '#/definitions/InputOrigin'
+      sanitizesInput:
+        $ref: '#/definitions/GenericSelection'
+      validatesInput:
+        $ref: '#/definitions/GenericSelection'
+      requiresAuthentication:
+        $ref: '#/definitions/GenericSelection'
+      authenticatesItself:
+        $ref: '#/definitions/GenericSelection'
+      ddosProtection:
+        $ref: '#/definitions/GenericSelection'
+      customCommunicationProtocol:
+        $ref: '#/definitions/GenericSelection'
+  DataStoreOptions:
+    type: object
+    properties:
+      trustLevel:
+        $ref: '#/definitions/ScaleSelection'
+      privilegeLevel:
+        $ref: '#/definitions/ScaleSelection'
+      storesSensitiveData:
+        $ref: '#/definitions/GenericSelection'
+      storesPersonalData:
+        $ref: '#/definitions/GenericSelection'
+      encrypted:
+        $ref: '#/definitions/GenericSelection'
+      removeableStorage:
+        $ref: '#/definitions/GenericSelection'
+      backup:
+        $ref: '#/definitions/GenericSelection'
+      shared:
+        $ref: '#/definitions/GenericSelection'
+      shellEnabled:
+        $ref: '#/definitions/GenericSelection'
+      storesLogs:
+        $ref: '#/definitions/GenericSelection'
+  DataFlowOptions:
+    type: object
+    properties:
+      transfersSensitiveData:
+        $ref: '#/definitions/GenericSelection'
+      networkType:
+        $ref: '#/definitions/NetworkType'
+      payload:
+        $ref: '#/definitions/PayloadType'
+      trustedNetwork:
+        $ref: '#/definitions/GenericSelection'
+  BoundaryOptions:
+    type: object
+    properties:
+      authenticatesItself:
+        $ref: '#/definitions/GenericSelection'
+      destinationAuthenticated:
+        $ref: '#/definitions/GenericSelection'
+      human:
+        $ref: '#/definitions/GenericSelection'
+  GenericSelection:
+    type: string
+    enum:
+      - true
+      - false
+      - notSelected
+  ScaleSelection:
+    type: string
+    enum:
+      - Low
+      - Medium
+      - High
+      - Not Selected
+  AppType:
+    type: string
+    enum:
+      - Native
+      - Cross-Platform
+      - Hybrid
+      - Progressive Web App
+      - Not Selected
+  DataHandling:
+    type: string
+    enum:
+      - Personal Data
+      - Sensitive Data
+      - Both
+      - Other
+      - Not Selected
+  InputOrigin:
+    type: string
+    enum:
+      - Anywhere
+      - Interal Network
+      - Local System
+      - Not Selected
+  NetworkType:
+    type: string
+    enum:
+      - Wire
+      - Wi-Fi
+      - Bluetooth
+      - Mobile Network
+      - Other
+      - Not Selected
+  PayloadType:
+    type: string
+    enum:
+      - JSON
+      - XML
+      - Query String
+      - SOAP
+      - Other
+      - Not Selected
+  PointCoordinates:
+    type: object
+    properties:
+      x:
+        type: number
+        format: float
+      'y':
+        type: number
+        format: float
+  ConnectedElement:
+    type: object
+    properties:
+      id:
+        type: string
+      type:
+        $ref: '#/definitions/ElementType'
+  PositionedConnectedElement:
+    allOf:
+      - $ref: '#/definitions/ConnectedElement'
+      - type: object
+        properties:
+          coordinates:
+            $ref: '#/definitions/PointCoordinates'
+  DataFlowConnectionInfo:
+    type: object
+    properties:
+      startElement:
+        $ref: '#/definitions/PositionedConnectedElement'
+      endElement:
+        $ref: '#/definitions/PositionedConnectedElement'
+  DataFlowDrawingPosition:
+    type: string
+    enum:
+      - top
+      - normal
+      - bottom
+  BaseProject:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      models:
+        type: array
+        items:
+          type: string
+      invites:
+        type: array
+        items:
+          type: string
+  Project:
+    type: object
+    properties:
+      projectID:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      creationDate:
+        type: string
+      models:
+        type: array
+        items:
+          type: string
+      invites:
+        type: array
+        items:
+          type: string
+      owner:
+        type: string
+      collaborators:
+        type: array
+        items:
+          type: string
+  DFDProjectLink:
+    type: object
+    properties:
+      projectID:
+        type: string
+      modelID:
+        type: string
+  ProjectID:
+    type: object
+    properties:
+      projectID:
+        type: string
+  InviteRequest:
+    type: object
+    properties:
+      projectID:
+        type: string
+      username:
+        type: string
+  Invitation:
+    type: object
+    properties:
+      invitationID:
+        type: string
+      projectID:
+        type: string
+      numberOfCollaborators:
+        type: integer
+      username:
+        type: string
+      owner:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      invitedAt:
+        type: string
+  ProfileData:
+    type: object
+    properties:
+      username:
+        type: string
+      mail:
+        type: string
+  UserExists:
+    type: object
+    properties:
+      exists:
+        type: boolean

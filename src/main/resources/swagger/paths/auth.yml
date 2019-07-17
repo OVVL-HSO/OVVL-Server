@@ -1,0 +1,44 @@
+/auth/signin:
+  post:
+    tags:
+      - authentication
+    summary: Sign into OVVL
+    description: Returns an authoriztaion token to make authorized requests
+    operationId: signIn
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: User Credentials
+        schema:
+          $ref: '#/definitions/User'
+    responses:
+      '200':
+        description: Signed In
+        schema:
+          type: object
+      '401':
+        description: Unauthorized
+/auth/signup:
+  post:
+    tags:
+      - authentication
+    summary: Sign up for OVVL
+    description: Creates an user account
+    operationId: signUp
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: User Credentials
+        schema:
+          $ref: '#/definitions/User'
+    responses:
+      '200':
+        description: Signed Up
+        schema:
+          type: object
+      '401':
+        description: Unauthorized

@@ -1,0 +1,24 @@
+type: object
+properties:
+  projectID:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+  creationDate:
+    type: string
+  models:
+    type: array
+    items:
+      type: string
+  invites:
+    type: array
+    items:
+      type: string
+  owner:
+    type: string
+  collaborators:
+    type: array
+    items:
+      type: string

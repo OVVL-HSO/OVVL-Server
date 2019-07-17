@@ -1,0 +1,8 @@
+type: string
+enum:
+  - Spoofing
+  - Tampering
+  - Repudiation
+  - Information Disclosure
+  - Denial Of Service
+  - Elevation Of Privilege

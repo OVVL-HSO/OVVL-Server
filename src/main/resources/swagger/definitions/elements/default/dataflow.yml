@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  connectedElements:
+    $ref: '#/definitions/DataFlowConnectionInfo'
+  position:
+    $ref: '#/definitions/DataFlowDrawingPosition'
+  type:
+    $ref: '#/definitions/DataFlowType'
+  options:
+    $ref: '#/definitions/DataFlowOptions'
+  genericType:
+    $ref: '#/definitions/ElementType'
+  cpe:
+    $ref: '#/definitions/CPE'

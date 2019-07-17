@@ -1,0 +1,76 @@
+/storage/model:
+  get:
+    tags:
+      - storage
+    summary: Find all models linked to a user
+    description: Returns the Metadata of all models linked to a user
+    operationId: findModels
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Found models
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ModelStorageData'
+      '400':
+        description: Bad request
+      '404':
+        description: No models found
+/storage/invites:
+  get:
+    tags:
+      - storage
+    summary: Loads Invites
+    description: Returns all invites linked to a user
+    operationId: getInvites
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Found Invites
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Invitation'
+      '400':
+        description: Bad request
+      '404':
+        description: No models found
+/storage/work:
+  get:
+    tags:
+      - storage
+    summary: Load stored model data, projects, and invites.
+    description: Returns al stored model meta data, projects and invites linked to a user
+    operationId: findStoredWork
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Loaded Storage Data
+        schema:
+          $ref: '#/definitions/StoredWork'
+      '400':
+        description: Bad request
+      '404':
+        description: Nothing found

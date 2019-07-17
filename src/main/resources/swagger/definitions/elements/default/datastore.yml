@@ -1,0 +1,14 @@
+allOf:
+  - $ref: '#/definitions/AnalysisDataStore'
+  - type: object
+    properties:
+      ip:
+        type: string
+      coordinates:
+        $ref: '#/definitions/PointCoordinates'
+      genericType:
+        $ref: '#/definitions/ElementType'
+      cpe:
+        $ref: '#/definitions/CPE'
+      connectedToDataFlow:
+        type: boolean

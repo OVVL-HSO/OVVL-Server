@@ -1,0 +1,7 @@
+type: object
+description: Specifies a vulnerabilities language and cweID
+properties:
+  language:
+    type: string
+  cweID:
+    type: string

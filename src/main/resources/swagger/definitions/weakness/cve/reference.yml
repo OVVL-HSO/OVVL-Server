@@ -1,0 +1,13 @@
+type: object
+description: Contains further information about a vulnerability and sometimes mitigation suggestions
+properties:
+  url:
+    type: string
+  name:
+    type: string
+  refSource:
+    type: string
+  tags:
+    type: array
+    items:
+      type: string
