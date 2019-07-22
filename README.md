@@ -12,7 +12,11 @@ The game is licensed under the [Creative Commons Attribution 3.0 United States L
 
 ## Run
 
-The intended way to run the server is by using docker with the required build arguments.
+Build the server using [Gradle](https://gradle.org/).
+
+```gradle clean build```
+
+Then run it with docker.
 
 ```bash
 docker build 
