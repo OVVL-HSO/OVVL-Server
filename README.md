@@ -16,7 +16,11 @@ Build the server using [Gradle](https://gradle.org/).
 
 ```gradle clean build```
 
-Then run it with docker.
+Then run it:
+
+```gradle bootRun```
+
+You can also run the Server using docker, but make sure to set up a network bridge with your MongoDB.
 
 ```bash
 docker build 
@@ -26,8 +30,6 @@ docker build
     --build-arg supportMailPW=$SUPPORT_MAIL_SENDER_PW
     --build-arg supportMailReceiver=$SUPPORT_MAIL_RECEIVER -t ovvl-docker .
 ```
-
-If you don't want to use docker, you can also run the server with ```gradle bootRun```. Make sure you have [Gradle](https://gradle.org/) installed.
 
 #### Environment Variables
 
