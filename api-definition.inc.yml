@@ -1,7 +1,7 @@
 ## --------------------
 ## DON'T EDIT THIS FILE
 ## --------------------
-## Engine: yamlinc@0.1.8
+## Engine: yamlinc@0.1.9
 ## Source: src/main/resources/swagger/api-definition.yml
 
 swagger: '2.0'
@@ -612,6 +612,52 @@ paths:
           description: Bad request
         '404':
           description: Nothing found
+  /settings:
+    get:
+      tags:
+        - settings
+      summary: Get user settings
+      description: Get user settings
+      operationId: getUserSettings
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Got User Settings
+          schema:
+            $ref: '#/definitions/Settings'
+        '400':
+          description: Bad Request
+    post:
+      tags:
+        - settings
+      summary: Save user settings
+      description: Save user settings
+      operationId: saveUserSettings
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Settings Data
+          schema:
+            $ref: '#/definitions/Settings'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Saved user settings successfully
+        '400':
+          description: Bad Request
 definitions:
   User:
     type: object
@@ -1597,4 +1643,9 @@ definitions:
     type: object
     properties:
       exists:
+        type: boolean
+  Settings:
+    type: object
+    properties:
+      darktheme:
         type: boolean

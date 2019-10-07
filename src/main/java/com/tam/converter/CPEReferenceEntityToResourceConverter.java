@@ -17,4 +17,12 @@ class CPEReferenceEntityToResourceConverter {
                 .referenceType(reference.getReferenceType())
                 .referenceContent(reference.getReferenceContent());
     }
+/*
+    static UserSettings convert(UserSettingsResource test, String username) {
+        return new UserSettings().username(username).settings(test);
+    }
+
+    static UserSettingsResource convert(UserSettings settings) {
+        return new UserSettingsResource().settings(settings.settings)
+    }*/
 }
