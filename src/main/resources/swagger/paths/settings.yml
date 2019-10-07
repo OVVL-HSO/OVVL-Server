@@ -1,0 +1,46 @@
+/settings:
+  get:
+    tags:
+    - settings
+    summary: Get user settings
+    description: Get user settings
+    operationId: getUserSettings
+    produces:
+    - application/json
+    parameters:
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Got User Settings
+        schema:
+          $ref: '#/definitions/Settings'
+      '400':
+        description: Bad Request
+  post:
+    tags:
+    - settings
+    summary: Save user settings
+    description: Save user settings
+    operationId: saveUserSettings
+    produces:
+    - application/json
+    parameters:
+    - in: body
+      name: body
+      description: Settings Data
+      schema:
+        $ref: '#/definitions/Settings'
+    - in: header
+      name: Authorization
+      description: Authorization header
+      required: true
+      type: string
+    responses:
+      '200':
+        description: Saved user settings successfully
+      '400':
+        description: Bad Request

@@ -6,3 +6,4 @@ $include: ./machine-learning.yml
 $include: ./project.yml
 $include: ./profile.yml
 $include: ./storage.yml
+$include: ./settings.yml

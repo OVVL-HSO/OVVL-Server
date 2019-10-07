@@ -244,3 +244,5 @@ ProfileData:
 UserExists:
   $include: ./profile/user-exists.yml
 
+Settings:
+  $include: ./user/settings.yml
