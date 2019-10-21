@@ -1,6 +1,6 @@
 type: object
 properties:
-  strideCategory:
+  threatCategory:
     $ref: '#/definitions/STRIDE'
   title:
     type: string

@@ -20,7 +20,7 @@ public class ThreatResourceToAppliedThreatConverter {
         return new AppliedThreatResource()
                 .threatID(UUID.randomUUID().toString())
                 .title(threatResource.getTitle())
-                .strideCategory(threatResource.getStrideCategory())
+                .threatCategory(threatResource.getThreatCategory())
                 .description(threatResource.getDescription())
                 .applicable(ApplicableStateResource.NOT_SELECTED)
                 .priority(ThreatPriorityResource.UNSPECIFIED)

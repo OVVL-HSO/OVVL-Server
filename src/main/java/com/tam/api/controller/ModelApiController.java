@@ -190,7 +190,7 @@ public class ModelApiController implements ModelApi {
         return new ResponseEntity<>(
                 new AnalysisResultResource()
                 .modelID(dfdModel.getModelID())
-                .threats(foundThreats)
+                .securityThreats(foundThreats)
                 .vulnerabilities(cveItems), HttpStatus.OK);
     }
 
