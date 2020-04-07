@@ -75,7 +75,7 @@
   post:
     tags:
       - model
-    summary: Analyze a threat model
+    summary: Analyze a new threat model
     description: Return the analysis of a threat model
     operationId: analyzeThreatModel
     produces:
@@ -98,6 +98,35 @@
           $ref: '#/definitions/AnalysisResult'
       '401':
         description: Unauthorized
+/model/analyze/{modelID}:
+  get:
+    tags:
+      - model
+    summary: Analyze an existing threat model
+    description: Return the analyis of a threat model that is already stored in the database
+    operationId: analyzeStoredThreatModel
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: modelID
+        description: ID of the saved model
+        required: true
+        type: string
+      - in: header
+        name: Authorization
+        description: Authorization header
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Analysis successful
+        schema:
+          $ref: '#/definitions/AnalysisResult'
+      '401':
+        description: Unauthorized
+
+
 /model/{modelID}:
   get:
     tags:

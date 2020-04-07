@@ -7,7 +7,7 @@ public class AppliedThreatToThreatResourceConverter {
     public static ThreatResource convert(AppliedThreatResource threatResource) {
         return new ThreatResource()
                 .title(threatResource.getTitle())
-                .strideCategory(threatResource.getStrideCategory())
+                .threatCategory(threatResource.getThreatCategory())
                 .description(threatResource.getDescription())
                 .affectedElements(threatResource.getAffectedElements());
     }
