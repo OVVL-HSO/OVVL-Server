@@ -31,12 +31,15 @@ public class SettingsApiController implements SettingsApi {
         String username = jwtProvider.getUsernameFromAuthHeader(authorization);
         StoredSettingsData userSettings = settingsRepository.findSettingsByUsername(username).orElse(null);
 
-        if(userSettings != null){
-            SettingsResource settingsResource = SettingsToStoredSettingsConverter.convertStoredSettingsToSettings(userSettings);
-            return new ResponseEntity(settingsResource, HttpStatus.OK);
+        // create default settings if user settings cannot be found in database
+        if(userSettings == null){
+            SettingsResource defaultSettingsRessource = new SettingsResource().darktheme(true);
+            this.saveUserSettings(authorization, defaultSettingsRessource);
+            return new ResponseEntity(defaultSettingsRessource, HttpStatus.OK);
         }
 
-        return new ResponseEntity(userSettings, HttpStatus.OK);
+        SettingsResource settingsResource = SettingsToStoredSettingsConverter.convertStoredSettingsToSettings(userSettings);
+        return new ResponseEntity(settingsResource, HttpStatus.OK);
     }
 
 
@@ -44,7 +47,6 @@ public class SettingsApiController implements SettingsApi {
     public ResponseEntity<Void> saveUserSettings(String authorization, SettingsResource settingsResource) {
         String username = jwtProvider.getUsernameFromAuthHeader(authorization);
 
-        System.out.println("Saving Settings for user :" + username);
         StoredSettingsData storedSettingsData = SettingsToStoredSettingsConverter.convert(settingsResource, username);
 
         // delete existing settings
