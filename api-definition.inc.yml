@@ -108,7 +108,7 @@ paths:
     post:
       tags:
         - model
-      summary: Analyze a threat model
+      summary: Analyze a new threat model
       description: Return the analysis of a threat model
       operationId: analyzeThreatModel
       produces:
@@ -119,6 +119,35 @@ paths:
           description: Threat Model
           schema:
             $ref: '#/definitions/AnalysisDFDModel'
+        - in: header
+          name: Authorization
+          description: Authorization header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Analysis successful
+          schema:
+            $ref: '#/definitions/AnalysisResult'
+        '401':
+          description: Unauthorized
+  '/model/analyze/{modelID}':
+    get:
+      tags:
+        - model
+      summary: Analyze an existing threat model
+      description: >-
+        Return the analyis of a threat model that is already stored in the
+        database
+      operationId: analyzeStoredThreatModel
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: modelID
+          description: ID of the saved model
+          required: true
+          type: string
         - in: header
           name: Authorization
           description: Authorization header
@@ -1030,7 +1059,7 @@ definitions:
   Threat:
     type: object
     properties:
-      strideCategory:
+      threatCategory:
         $ref: '#/definitions/STRIDE'
       title:
         type: string
@@ -1306,7 +1335,11 @@ definitions:
     properties:
       modelID:
         type: string
-      threats:
+      securityThreats:
+        type: array
+        items:
+          $ref: '#/definitions/AppliedThreat'
+      privacyThreats:
         type: array
         items:
           $ref: '#/definitions/AppliedThreat'

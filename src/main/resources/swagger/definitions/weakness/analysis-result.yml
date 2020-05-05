@@ -2,7 +2,11 @@ type: object
 properties:
   modelID:
     type: string
-  threats:
+  securityThreats:
+    type: array
+    items:
+      $ref: '#/definitions/AppliedThreat'
+  privacyThreats:
     type: array
     items:
       $ref: '#/definitions/AppliedThreat'

@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.UUID;
 
 @EnableAutoConfiguration
 @RestController
@@ -152,6 +151,22 @@ public class ModelApiController implements ModelApi {
 
     @Override
     @CrossOrigin
+    public ResponseEntity<AnalysisResultResource> analyzeStoredThreatModel(String modelID, String authorization){
+        if (modelID == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        // Load given model from database
+        StoredDFDModelResource dfdModelResource = loadModel(modelID, authorization).getBody();
+
+        // Convert StoredDFDModelResource to AnalysisDFDModelResource
+        AnalysisDFDModelResource analysisDfdModelResource = StoredDFDModelResourceToAnalysisDFDModelResourceConverter.convert(dfdModelResource);
+
+        // Call normal analyze function with converted AnalysisDFDModelResource
+        return analyzeThreatModel(authorization, analysisDfdModelResource);
+    }
+
+    @Override
+    @CrossOrigin
     public ResponseEntity<AnalysisResultResource>  analyzeThreatModel(String authorization, AnalysisDFDModelResource dfdModel) {
         if (dfdModel == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -190,7 +205,7 @@ public class ModelApiController implements ModelApi {
         return new ResponseEntity<>(
                 new AnalysisResultResource()
                 .modelID(dfdModel.getModelID())
-                .threats(foundThreats)
+                .securityThreats(foundThreats)
                 .vulnerabilities(cveItems), HttpStatus.OK);
     }
 
