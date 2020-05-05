@@ -1,7 +1,13 @@
 package com.tam.services.meta;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tam.model.MitreCWE.*;
+import com.tam.model.MitreCWE.ThreatCatalogue.CWEThreatItem;
+import com.tam.model.MitreCWE.ThreatCatalogue.CWEThreatItemJson;
 import com.tam.repositories.CWERepository;
+import com.tam.repositories.CWEThreatCatalogueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -13,6 +19,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,13 +29,40 @@ import java.util.List;
 public class CWEService {
 
     private CWERepository cweRepository;
+    private CWEThreatCatalogueRepository cweThreatCatalogueRepository;
 
     @Autowired
-    public CWEService(CWERepository cweRepository) {
+    public CWEService(CWERepository cweRepository, CWEThreatCatalogueRepository cweThreatCatalogueRepository) {
         this.cweRepository = cweRepository;
+        this.cweThreatCatalogueRepository = cweThreatCatalogueRepository;
     }
 
-    public void fillDBWithCWEData() throws IOException {
+    public void fillDBCWEThreatCatalogue() throws IOException {
+        String fileLocation = "/cwe_threat_catalogue.json";
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+        System.out.println("1");
+        TypeReference<CWEThreatItemJson> typeReference = new TypeReference<CWEThreatItemJson>(){};
+        InputStream inputStream = TypeReference.class.getResourceAsStream(fileLocation);
+        System.out.println("2");
+        try {
+            System.out.println("3");
+            CWEThreatItemJson cweThreatItemJson = mapper.readValue(inputStream, typeReference);
+            System.out.println("4");
+            List<CWEThreatItem> cweThreatList = cweThreatItemJson.getThreatCatalogue();
+            System.out.println("5");
+            cweThreatCatalogueRepository.saveAll(cweThreatList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //List<CWEThreatItem> catalogueEntries = Objects.requireNonNull(convertNVDCVEFileInputDataToNVDCVELists(mapper, specification, cves));
+    }
+
+
+        public void fillDBWithCWEData() throws IOException {
         try {
             List<String> cweFiles = getCWEFileList();
 
