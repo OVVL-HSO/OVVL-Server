@@ -2,6 +2,7 @@ package com.tam;
 
 import com.tam.services.meta.CPEService;
 import com.tam.services.meta.CVEService;
+import com.tam.services.meta.CWEService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -9,12 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
@@ -32,6 +29,10 @@ public class ThreatServer implements CommandLineRunner {
     @Autowired
     private CPEService cpeService;
 
+    @Autowired
+    private CWEService cweService;
+
+
     public static void main(String[] args) throws Exception {
         new SpringApplication(ThreatServer.class).run(args);
     }
@@ -40,6 +41,8 @@ public class ThreatServer implements CommandLineRunner {
     public void run(String... arg0) throws Exception {
         // cpeService.fillDBWithCPEXML();
         // cveService.fillDBWithCVEData();
+        // cweService.fillDBWithCWEData();
+
         if (arg0.length > 0 && arg0[0].equals("exitcode")) {
             throw new ExitException();
         }

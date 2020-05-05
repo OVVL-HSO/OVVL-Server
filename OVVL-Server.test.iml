@@ -30,6 +30,7 @@
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:2.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.7" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-rest-webmvc:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-rest-core:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.7" level="project" />

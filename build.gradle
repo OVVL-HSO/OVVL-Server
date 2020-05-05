@@ -50,6 +50,7 @@ dependencies {
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     compile('com.fasterxml.jackson.core:jackson-core')
     compile('com.fasterxml.jackson.core:jackson-databind')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv')
     compile('javax.xml.bind:jaxb-api:2.3.0')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-mail')
