@@ -63,7 +63,7 @@ public class AnalysisUtil {
 
     public static void checkIfElementsWereRemovedAndRemoveApplyingThreats(AnalysisDFDModelResource newModel,
                                                                    AnalysisDFDModelResource oldModel,
-                                                                   List<AppliedThreatResource> foundThreats) {
+                                                                   List<AppliedSTRIDEThreatResource> foundThreats) {
         List<String> idsOfDeleteElements = new ArrayList<>();
         if (CheckUtil.interactorsWereRemoved(newModel.getInteractors(), oldModel.getInteractors())) {
             idsOfDeleteElements.addAll(FindUtil

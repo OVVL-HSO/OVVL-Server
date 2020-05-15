@@ -5,11 +5,11 @@ properties:
   securityThreats:
     type: array
     items:
-      $ref: '#/definitions/AppliedThreat'
+      $ref: '#/definitions/AppliedSTRIDEThreat'
   privacyThreats:
     type: array
     items:
-      $ref: '#/definitions/AppliedThreat'
+      $ref: '#/definitions/AppliedSTRIDEThreat'
   vulnerabilities:
     type: array
     items:

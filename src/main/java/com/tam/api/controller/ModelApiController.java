@@ -15,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.UUID;
 
 @EnableAutoConfiguration
@@ -180,19 +182,21 @@ public class ModelApiController implements ModelApi {
         WorkingArea oldWorkingArea = workingAreaRepository.findFirstByUsername(username).orElse(null);
         // And delete the old one, so only one is cached at all times
         workingAreaRepository.deleteAllByUsername(username);
-        List<AppliedThreatResource> foundThreats;
+        List<AppliedSTRIDEThreatResource> foundSTRIDEThreats;
 
         // If the stored model has a different model ID than the new model, we delete the old working area and do a fresh analysis
         if (oldWorkingArea == null || !oldWorkingArea.getCurrentModel().getModelID().equals(dfdModel.getModelID())) {
-            foundThreats = findThreatResourcesAndConvertToAppliedThreats(dfdModel);
+            foundSTRIDEThreats = findSTRIDEThreatResourcesAndConvertToAppliedThreats(dfdModel);
         } else {
             // Otherwise, we extract the elements which got changed, analyze them, and combine them with the old ones (distinct threats)
             AnalysisDFDModelResource modelWithElementsThatNeedToBeAnalyzed
                     = AnalysisUtil.collectElementsContainedInDFDModelWhichNeedAnalysis(dfdModel, oldWorkingArea.getCurrentModel());
-            foundThreats =
-                    analyzeDFDModelForThreats(modelWithElementsThatNeedToBeAnalyzed, oldWorkingArea.getFoundThreats());
-            AnalysisUtil.checkIfElementsWereRemovedAndRemoveApplyingThreats(dfdModel, oldWorkingArea.getCurrentModel(), foundThreats);
+            foundSTRIDEThreats =
+                    analyzeDFDModelForSTRIDEThreats(modelWithElementsThatNeedToBeAnalyzed, oldWorkingArea.getFoundThreats());
+            //foundCWEThreats =
+            AnalysisUtil.checkIfElementsWereRemovedAndRemoveApplyingThreats(dfdModel, oldWorkingArea.getCurrentModel(), foundSTRIDEThreats);
         }
+
 
         // Then we load the vulnerability data...
         List<CVEResource> cveItems = new ArrayList<>();
@@ -200,24 +204,24 @@ public class ModelApiController implements ModelApi {
             cveItems = loadCVEItems(dfdModel);
         }
         // Save the new working area...
-        createAndSaveNewWorkingAreaState(username, dfdModel, foundThreats);
+        createAndSaveNewWorkingAreaState(username, dfdModel, foundSTRIDEThreats);
         // And return the new Data
         return new ResponseEntity<>(
                 new AnalysisResultResource()
                 .modelID(dfdModel.getModelID())
-                .securityThreats(foundThreats)
+                .securityThreats(foundSTRIDEThreats) // TODO: change security Threats to STRIDE Threats
                 .vulnerabilities(cveItems), HttpStatus.OK);
     }
 
-    private List<AppliedThreatResource> findThreatResourcesAndConvertToAppliedThreats(AnalysisDFDModelResource model) {
-        List<ThreatResource> foundThreats = dfdModelAnalysisService.analyzeThreatModel(model);
-        return ThreatResourceToAppliedThreatConverter.convertThreatResourcesToAppliedThreats(foundThreats);
+    private List<AppliedSTRIDEThreatResource> findSTRIDEThreatResourcesAndConvertToAppliedThreats(AnalysisDFDModelResource model) {
+        List<STRIDEThreatResource> foundSTRIDEThreats = dfdModelAnalysisService.analyzeSTRIDEThreatModel(model);
+        return STRIDEThreatResourceToAppliedSTRIDEThreatConverter.convertThreatResourcesToAppliedThreats(foundSTRIDEThreats);
     }
 
-    private List<AppliedThreatResource> analyzeDFDModelForThreats(AnalysisDFDModelResource model,
-                                                                  List<AppliedThreatResource> oldThreats) {
-        List<AppliedThreatResource> appliedThreats = findThreatResourcesAndConvertToAppliedThreats(model);
-        return DeleteUtil.deleteDuplicateThreatsFromThreatList(appliedThreats, oldThreats);
+    private List<AppliedSTRIDEThreatResource> analyzeDFDModelForSTRIDEThreats(AnalysisDFDModelResource model,
+                                                                              List<AppliedSTRIDEThreatResource> oldThreats) {
+        List<AppliedSTRIDEThreatResource> appliedSTRIDEThreats = findSTRIDEThreatResourcesAndConvertToAppliedThreats(model);
+        return DeleteUtil.deleteDuplicateSTRIDEThreatsFromThreatList(appliedSTRIDEThreats, oldThreats);
     }
 
     private List<CVEResource> loadCVEItems(AnalysisDFDModelResource dfdModel) {
@@ -230,14 +234,14 @@ public class ModelApiController implements ModelApi {
 
     private void createAndSaveNewWorkingAreaState(String username,
                                                   AnalysisDFDModelResource dfdModel,
-                                                  List<AppliedThreatResource> newThreats) {
+                                                  List<AppliedSTRIDEThreatResource> newThreats) {
         WorkingArea workingArea = new WorkingArea(username, dfdModel, newThreats);
         workingAreaRepository.save(workingArea);
     }
 
     @Override
     @CrossOrigin
-    public ResponseEntity<Void> updateThreatData(String authorization, AppliedThreatResource body) {
+    public ResponseEntity<Void> updateSTRIDEThreatData(String authorization, AppliedSTRIDEThreatResource body) {
         if (body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -246,7 +250,7 @@ public class ModelApiController implements ModelApi {
         WorkingArea currentWorkingArea = workingAreaRepository.findFirstByUsername(username).orElse(null);
 
         if (currentWorkingArea != null && currentWorkingArea.getFoundThreats() != null){
-            List<AppliedThreatResource> applyingThreats = currentWorkingArea.getFoundThreats();
+            List<AppliedSTRIDEThreatResource> applyingThreats = currentWorkingArea.getFoundThreats();
             // If the threat from the frontend does not exist in the list for some reason, something went really wrong
             if (FindUtil.threatExistsInListOfThreats(applyingThreats, body.getThreatID())) {
                 // Because the body is an update, we can delete the old threat...
@@ -268,7 +272,7 @@ public class ModelApiController implements ModelApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void updateMLDataSets(AppliedThreatResource body, AnalysisDFDModelResource model) {
+    private void updateMLDataSets(AppliedSTRIDEThreatResource body, AnalysisDFDModelResource model) {
         ThreatDataSetResource mlDataSet = mlRepository.findById(body.getThreatID()).orElse(null);
         // If an dataset containing the treat already exists and has an applicable status set..
         if (mlDataSet != null && body.getApplicable() != null) {
@@ -290,7 +294,7 @@ public class ModelApiController implements ModelApi {
         }
     }
 
-    private void createNewDataSet(AppliedThreatResource threat,
+    private void createNewDataSet(AppliedSTRIDEThreatResource threat,
                                   AnalysisDFDModelResource model) {
         AnalysisDataFlowResource affectedDataFlow =
                 model.getDataFlows()

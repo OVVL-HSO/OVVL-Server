@@ -11,11 +11,11 @@ import java.util.List;
 public class WorkingArea {
     private String username;
     private AnalysisDFDModelResource currentModel;
-    private List<AppliedThreatResource> foundThreats;
+    private List<AppliedSTRIDEThreatResource> foundThreats;
 
     public WorkingArea(String username,
                 AnalysisDFDModelResource currentModel,
-                List<AppliedThreatResource> foundThreats) {
+                List<AppliedSTRIDEThreatResource> foundThreats) {
         this.username = username;
         this.currentModel = currentModel;
         this.foundThreats = foundThreats;

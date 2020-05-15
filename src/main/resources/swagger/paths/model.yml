@@ -52,7 +52,7 @@
       - model
     summary: Update threat properties
     description: Update threat properties to set applicable state and priority
-    operationId: updateThreatData
+    operationId: updateSTRIDEThreatData
     produces:
       - application/json
     parameters:
@@ -65,7 +65,7 @@
         name: body
         description: Threat Data
         schema:
-          $ref: '#/definitions/AppliedThreat'
+          $ref: '#/definitions/AppliedSTRIDEThreat'
     responses:
       '200':
         description: Updated threat successfully

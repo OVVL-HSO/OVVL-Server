@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ThreatFinderService {
+public class ThreatFinderServiceSTRIDE {
 
     private ThreatGenerationService threatGenerationService;
 
     @Autowired
-    public ThreatFinderService(ThreatGenerationService threatGenerationService) {
+    public ThreatFinderServiceSTRIDE(ThreatGenerationService threatGenerationService) {
         this.threatGenerationService = threatGenerationService;
     }
 
-    void findDataFlowThreats(List<ThreatResource> foundThreats, AnalysisDataFlowResource dataFlow, ThreatMetaData threatMetaData) {
+    void findDataFlowThreats(List<STRIDEThreatResource> foundThreats, AnalysisDataFlowResource dataFlow, ThreatMetaData threatMetaData) {
         if (DataFlowOptionsAnalysisUtil.dataFlowTransportsSensitiveData(dataFlow.getOptions())) {
             foundThreats.add(threatGenerationService.getDataManipulationThreat(threatMetaData));
         }
@@ -31,7 +31,7 @@ public class ThreatFinderService {
 
     void findThreatsForProcessStartAndDataStoreEnd(ThreatMetaData threatMetaData,
                                                    AnalysisDataStoreResource endDataStore,
-                                                   List<ThreatResource> foundThreats) {
+                                                   List<STRIDEThreatResource> foundThreats) {
         if (DataStoreOptionsAnalysisUtil.dataStoreIsEncrypted(endDataStore.getOptions())) {
             foundThreats.add(threatGenerationService.getDataStoreEncryptedThreat(endDataStore.getName(), threatMetaData));
             foundThreats.add(threatGenerationService.getEncryptionKeyDiscoveryThreat(endDataStore.getName(), threatMetaData));
@@ -58,7 +58,7 @@ public class ThreatFinderService {
                                                    AnalysisDataStoreResource startDataStore,
                                                    AnalysisProcessResource endProcess,
                                                    AnalysisDataFlowResource dataFlow,
-                                                   List<ThreatResource> foundThreats) {
+                                                   List<STRIDEThreatResource> foundThreats) {
         addThreatsApplyingToEndProcesses(endProcess, dataFlow.getOptions(), threatMetaData, foundThreats);
         if (DataStoreOptionsAnalysisUtil.dataStoreStoresSensitiveDataAndIsntHighlyTrusted(startDataStore.getOptions())) {
             foundThreats.add(threatGenerationService.getCredentialThiefThreat(startDataStore.getName(), threatMetaData));
@@ -71,7 +71,7 @@ public class ThreatFinderService {
                                                  AnalysisProcessResource startProcess,
                                                  AnalysisProcessResource endProcess,
                                                  AnalysisDataFlowResource dataFlow,
-                                                 List<ThreatResource> foundThreats) {
+                                                 List<STRIDEThreatResource> foundThreats) {
         addThreatsApplyingToEndProcesses(endProcess, dataFlow.getOptions(), threatMetaData, foundThreats);
         if(ProcessOptionsAnalysisUtil.bothCommunicatingProcessesArentHighlyTrusted(startProcess.getOptions(), endProcess.getOptions())) {
             foundThreats.add(threatGenerationService.getCanonicalNamesThreat(threatMetaData));
@@ -91,7 +91,7 @@ public class ThreatFinderService {
                                                     AnalysisInteractorResource startInteractor,
                                                     AnalysisProcessResource endProcess,
                                                     AnalysisDataFlowResource dataFlow,
-                                                    List<ThreatResource> foundThreats) {
+                                                    List<STRIDEThreatResource> foundThreats) {
         addThreatsApplyingToEndProcesses(endProcess, dataFlow.getOptions(), threatMetaData, foundThreats);
         foundThreats.add(threatGenerationService.getWeakDigitalSignatureThreat(threatMetaData));
         foundThreats.add(threatGenerationService.getDataCheckThreat(startInteractor.getName(), endProcess.getName(), threatMetaData));
@@ -113,7 +113,7 @@ public class ThreatFinderService {
     private void addThreatsApplyingToEndProcesses(AnalysisProcessResource endProcess,
                                                   DataFlowOptionsResource dataFlowOptions,
                                                   ThreatMetaData threatMetaData,
-                                                  List<ThreatResource> foundThreats) {
+                                                  List<STRIDEThreatResource> foundThreats) {
         if (ProcessOptionsAnalysisUtil.processTrustLevelIsNotHigh(endProcess.getOptions())
                 && ProcessOptionsAnalysisUtil.processUsesNetwork(endProcess.getType())
                 && DataFlowOptionsAnalysisUtil.dataFlowUsesNetwork(dataFlowOptions)) {

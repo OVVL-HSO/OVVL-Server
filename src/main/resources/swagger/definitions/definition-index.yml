@@ -83,7 +83,7 @@ STRIDE:
 
 # STRIDE threats
 Threat:
-  $include: ./weakness/threat.yml
+  $include: ./weakness/STRIDE-threat.yml
 
 # Used to set the applicable state of threats
 ApplicableState:
@@ -97,7 +97,7 @@ ThreatPriority:
 # Otherwise, every time threats are returned and their applicable state was changed, a new DataSet would be added
 # to the Machine Learning algorithms and thus created a wrongly weighted result
 AppliedThreat:
-  $include: ./weakness/applied-threat.yml
+  $include: ./weakness/applied-STRIDE-threat.yml
 
 # Dataset used for machine learning
 ThreatDataSet:

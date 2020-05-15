@@ -1,23 +1,22 @@
 package com.tam.converter;
 
 import com.tam.model.ApplicableStateResource;
-import com.tam.model.AppliedThreatResource;
+import com.tam.model.AppliedSTRIDEThreatResource;
 import com.tam.model.ThreatPriorityResource;
-import com.tam.model.ThreatResource;
+import com.tam.model.STRIDEThreatResource;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ThreatResourceToAppliedThreatConverter {
+public class STRIDEThreatResourceToAppliedSTRIDEThreatConverter {
 
-    public static List<AppliedThreatResource> convertThreatResourcesToAppliedThreats(List<ThreatResource> threatResources) {
-        return threatResources.stream().map(ThreatResourceToAppliedThreatConverter::convert).collect(Collectors.toList());
+    public static List<AppliedSTRIDEThreatResource> convertThreatResourcesToAppliedThreats(List<STRIDEThreatResource> threatResources) {
+        return threatResources.stream().map(STRIDEThreatResourceToAppliedSTRIDEThreatConverter::convert).collect(Collectors.toList());
     }
 
-    private static AppliedThreatResource convert(ThreatResource threatResource) {
-        return new AppliedThreatResource()
+    private static AppliedSTRIDEThreatResource convert(STRIDEThreatResource threatResource) {
+        return new AppliedSTRIDEThreatResource()
                 .threatID(UUID.randomUUID().toString())
                 .title(threatResource.getTitle())
                 .threatCategory(threatResource.getThreatCategory())

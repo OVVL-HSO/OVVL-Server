@@ -85,7 +85,7 @@ paths:
         - model
       summary: Update threat properties
       description: Update threat properties to set applicable state and priority
-      operationId: updateThreatData
+      operationId: updateSTRIDEThreatData
       produces:
         - application/json
       parameters:
@@ -98,7 +98,7 @@ paths:
           name: body
           description: Threat Data
           schema:
-            $ref: '#/definitions/AppliedThreat'
+            $ref: '#/definitions/AppliedSTRIDEThreat'
       responses:
         '200':
           description: Updated threat successfully
@@ -1099,7 +1099,7 @@ definitions:
       id:
         type: string
       threat:
-        $ref: '#/definitions/Threat'
+        $ref: '#/definitions/STRIDEThreat'
       startItem:
         type: object
         additionalProperties: true
@@ -1338,11 +1338,11 @@ definitions:
       securityThreats:
         type: array
         items:
-          $ref: '#/definitions/AppliedThreat'
+          $ref: '#/definitions/AppliedSTRIDEThreat'
       privacyThreats:
         type: array
         items:
-          $ref: '#/definitions/AppliedThreat'
+          $ref: '#/definitions/AppliedSTRIDEThreat'
       vulnerabilities:
         type: array
         items:

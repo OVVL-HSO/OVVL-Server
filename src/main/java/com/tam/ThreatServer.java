@@ -42,7 +42,7 @@ public class ThreatServer implements CommandLineRunner {
         // cpeService.fillDBWithCPEXML();
         // cveService.fillDBWithCVEData();
         // cweService.fillDBWithCWEData();
-        cweService.fillDBCWEThreatCatalogue();
+        // cweService.fillDBCWEThreatCatalogue();
 
         if (arg0.length > 0 && arg0[0].equals("exitcode")) {
             throw new ExitException();
