@@ -1,0 +1,9 @@
+type: object
+properties:
+  cwe:
+    type: object
+    $ref: '#/definitions/CWE'
+  affectedElements:
+    type: array
+    items:
+      type: string

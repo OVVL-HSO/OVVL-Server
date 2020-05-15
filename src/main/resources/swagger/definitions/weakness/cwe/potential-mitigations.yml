@@ -1,0 +1,8 @@
+type: object
+properties:
+  phase:
+    type: string
+  strategy:
+    type: string
+  description:
+    type: string

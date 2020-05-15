@@ -65,7 +65,7 @@
         name: body
         description: Threat Data
         schema:
-          $ref: '#/definitions/AppliedSTRIDEThreat'
+          $ref: '#/definitions/AppliedStrideThreat'
     responses:
       '200':
         description: Updated threat successfully

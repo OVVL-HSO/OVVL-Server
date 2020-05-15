@@ -98,7 +98,7 @@ paths:
           name: body
           description: Threat Data
           schema:
-            $ref: '#/definitions/AppliedSTRIDEThreat'
+            $ref: '#/definitions/AppliedStrideThreat'
       responses:
         '200':
           description: Updated threat successfully
@@ -1047,6 +1047,64 @@ definitions:
       - NONE
       - LOW
       - HIGH
+  CWE:
+    type: object
+    description: Contains all usable data of a weakness (CWE)
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      description:
+        type: string
+      detectionMethods:
+        type: array
+        items:
+          $ref: '#/definitions/DetectionMethods'
+      potentialMitigations:
+        type: array
+        items:
+          $ref: '#/definitions/PotentialMitigations'
+      commonConsequences:
+        type: array
+        items:
+          $ref: '#/definitions/CommonConsequences'
+  CommonConsequences:
+    type: object
+    properties:
+      scope:
+        type: array
+        items:
+          type: string
+      impact:
+        type: array
+        items:
+          type: string
+      note:
+        type: array
+        items:
+          type: string
+  DetectionMethods:
+    type: object
+    properties:
+      method:
+        type: string
+      description:
+        type: string
+      effectiveness:
+        type: string
+      effectivenessNotes:
+        type: string
+  PotentialMitigations:
+    type: object
+    properties:
+      phase:
+        type: string
+      strategy:
+        type: string
+      description:
+        type: string
   STRIDE:
     type: string
     enum:
@@ -1056,7 +1114,7 @@ definitions:
       - Information Disclosure
       - Denial Of Service
       - Elevation Of Privilege
-  Threat:
+  StrideThreat:
     type: object
     properties:
       threatCategory:
@@ -1065,6 +1123,16 @@ definitions:
         type: string
       description:
         type: string
+      affectedElements:
+        type: array
+        items:
+          type: string
+  CWEThreat:
+    type: object
+    properties:
+      cwe:
+        type: object
+        $ref: '#/definitions/CWE'
       affectedElements:
         type: array
         items:
@@ -1082,9 +1150,9 @@ definitions:
       - low
       - medium
       - high
-  AppliedThreat:
+  AppliedSTRIDEThreat:
     allOf:
-      - $ref: '#/definitions/Threat'
+      - $ref: '#/definitions/StrideThreat'
       - type: object
         properties:
           threatID:
@@ -1093,13 +1161,14 @@ definitions:
             $ref: '#/definitions/ApplicableState'
           priority:
             $ref: '#/definitions/ThreatPriority'
+  AppliedCWEThreat: {}
   ThreatDataSet:
     type: object
     properties:
       id:
         type: string
       threat:
-        $ref: '#/definitions/STRIDEThreat'
+        $ref: '#/definitions/StrideThreat'
       startItem:
         type: object
         additionalProperties: true
@@ -1335,14 +1404,14 @@ definitions:
     properties:
       modelID:
         type: string
-      securityThreats:
+      strideThreats:
         type: array
         items:
           $ref: '#/definitions/AppliedSTRIDEThreat'
-      privacyThreats:
+      cweThreats:
         type: array
         items:
-          $ref: '#/definitions/AppliedSTRIDEThreat'
+          $ref: '#/definitions/AppliedCweThreat'
       vulnerabilities:
         type: array
         items:

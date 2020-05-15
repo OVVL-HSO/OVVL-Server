@@ -1,0 +1,22 @@
+type: object
+description: Contains all usable data of a weakness (CWE)
+properties:
+  id:
+    type: integer
+    format: int32
+  name:
+    type: string
+  description:
+    type: string
+  detectionMethods:
+    type: array
+    items:
+      $ref: '#/definitions/DetectionMethods'
+  potentialMitigations:
+    type: array
+    items:
+      $ref: '#/definitions/PotentialMitigations'
+  commonConsequences:
+    type: array
+    items:
+      $ref: '#/definitions/CommonConsequences'

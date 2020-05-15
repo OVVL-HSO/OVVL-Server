@@ -3,7 +3,7 @@ properties:
   id:
     type: string
   threat:
-    $ref: '#/definitions/STRIDEThreat'
+    $ref: '#/definitions/StrideThreat'
   startItem:
     type: object
     additionalProperties: true

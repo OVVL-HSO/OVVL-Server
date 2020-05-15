@@ -209,7 +209,7 @@ public class ModelApiController implements ModelApi {
         return new ResponseEntity<>(
                 new AnalysisResultResource()
                 .modelID(dfdModel.getModelID())
-                .securityThreats(foundSTRIDEThreats) // TODO: change security Threats to STRIDE Threats
+                .strideThreats(foundSTRIDEThreats)
                 .vulnerabilities(cveItems), HttpStatus.OK);
     }
 
@@ -239,7 +239,7 @@ public class ModelApiController implements ModelApi {
         workingAreaRepository.save(workingArea);
     }
 
-    @Override
+    // @Override
     @CrossOrigin
     public ResponseEntity<Void> updateSTRIDEThreatData(String authorization, AppliedSTRIDEThreatResource body) {
         if (body == null) {

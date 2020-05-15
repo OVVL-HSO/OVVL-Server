@@ -77,27 +77,47 @@ Scope:
 Impact:
   $include: ./weakness/cve/cvss/impact.yml
 
+# Vulnerabilities applying to CPEs.
+CWE:
+  $include: ./weakness/cwe/cwe.yml
+### CWE specification
+CommonConsequences:
+  $include: ./weakness/cwe/common-consequences.yml
+DetectionMethods:
+  $include: ./weakness/cwe/detection-methods.yml
+PotentialMitigations:
+  $include: ./weakness/cwe/potential-mitigations.yml
+
 # STRIDE enum
 STRIDE:
   $include: ./weakness/stride.yml
 
 # STRIDE threats
-Threat:
-  $include: ./weakness/STRIDE-threat.yml
+StrideThreat:
+  $include: ./weakness/stride-threat.yml
 
-# Used to set the applicable state of threats
+# CWE-based threats
+CWEThreat:
+  $include: ./weakness/cwe-threat.yml
+
+# Used to set the applicable state of STRIDE threats
 ApplicableState:
   $include: ./weakness/applicable-state.yml
 
-# Used to set the priority of threats
+# Used to set the priority of STRIDE threats
 ThreatPriority:
   $include: ./weakness/threat-priority.yml
 
 # Like Threat, but has an ID
 # Otherwise, every time threats are returned and their applicable state was changed, a new DataSet would be added
 # to the Machine Learning algorithms and thus created a wrongly weighted result
-AppliedThreat:
-  $include: ./weakness/applied-STRIDE-threat.yml
+AppliedSTRIDEThreat:
+  $include: ./weakness/applied-stride-threat.yml
+
+# Same as above, but for CWE-based threats
+AppliedCWEThreat:
+  $include: ./weakness/applied-cwe-threat.yml
+
 
 # Dataset used for machine learning
 ThreatDataSet:

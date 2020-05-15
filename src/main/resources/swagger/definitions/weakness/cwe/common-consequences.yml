@@ -1,0 +1,14 @@
+type: object
+properties:
+  scope:
+    type: array
+    items:
+      type: string
+  impact:
+    type: array
+    items:
+      type: string
+  note:
+    type: array
+    items:
+      type: string

@@ -2,14 +2,14 @@ type: object
 properties:
   modelID:
     type: string
-  securityThreats:
+  strideThreats:
     type: array
     items:
       $ref: '#/definitions/AppliedSTRIDEThreat'
-  privacyThreats:
+  cweThreats:
     type: array
     items:
-      $ref: '#/definitions/AppliedSTRIDEThreat'
+      $ref: '#/definitions/AppliedCweThreat'
   vulnerabilities:
     type: array
     items:
