@@ -18,17 +18,14 @@ public class DFDModelCWEAnalysisService {
 
     @Autowired
     public DFDModelCWEAnalysisService(ThreatFinderServiceCWE threatFinderServiceCWE) {
-        System.out.println("DFDModelCWEAnalysisService Constructor");
         this.threatFinderServiceCWE = threatFinderServiceCWE;
     }
 
     public List<CWEThreatResource> analyzeCWEThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
-        System.out.println("analyzeCWEThreatModel");
         return findCWEThreatsOnSelectedThreatModel(dfdModelToBeAnalyzed);
     }
 
     private List<CWEThreatResource> findCWEThreatsOnSelectedThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
-        System.out.println("findCWEThreatsOnSelectedThreatModel");
         List<CWEThreatResource> foundThreats = new ArrayList<>();
         dfdModelToBeAnalyzed.getDataFlows()
                 .forEach(dataFlow -> getCWEThreats(dataFlow, dfdModelToBeAnalyzed, foundThreats));

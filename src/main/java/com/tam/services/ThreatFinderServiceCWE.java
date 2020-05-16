@@ -36,27 +36,8 @@ public class ThreatFinderServiceCWE {
         );
 
 
-        System.out.println(elementAttributes.getAuthentication());
-
-                /*
-        System.out.println("threatMetaData.getEndElementType():" + threatMetaData.getEndElementType());
-        switch (threatMetaData.getEndElementType()){
-            case "process":
-                break;
-            case "interactor":
-                break;
-            case "datastore":
-                break;
-            default:
-                return;
-        }
-        */
-
-        //GenericModelElement dataFlowEndElement = GenericElementUtil.convertDataFlowConnectedElementsToGenericElement(dataFlow.getEndElement());
 
 
-        //
-        //
         //ThreatGenerationServiceHelperUtil.createAffectedElementsList
 
         //return new CWEThreatResource()
@@ -97,15 +78,14 @@ public class ThreatFinderServiceCWE {
     }
 
     private CWESelectionAuthentication getCWESelectionAuthentication(ThreatMetaData threatMetaData, AnalysisDFDModelResource dfdModelToBeAnalyzed){
-        GenericSelectionResource startElementAuthenticatesItself = GenericSelectionResource.NOTSELECTED;
-        GenericSelectionResource endElementAuthenticatesItself = GenericSelectionResource.NOTSELECTED;
-        GenericSelectionResource startElementRequiresAuthentication = GenericSelectionResource.NOTSELECTED;
-        GenericSelectionResource endElementRequiresAuthentication = GenericSelectionResource.NOTSELECTED;
+        GenericSelectionResource startElementAuthenticatesItself = GenericSelectionResource.NOT_SELECTED;
+        GenericSelectionResource endElementAuthenticatesItself = GenericSelectionResource.NOT_SELECTED;
+        GenericSelectionResource startElementRequiresAuthentication = GenericSelectionResource.NOT_SELECTED;
+        GenericSelectionResource endElementRequiresAuthentication = GenericSelectionResource.NOT_SELECTED;
 
         if (threatMetaData.getEndElementType() == "process"){
             AnalysisProcessResource process = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getEndElementID());
             if (process != null) {
-                System.out.println(process);
                 endElementRequiresAuthentication = process.getOptions().getRequiresAuthentication();
             }
         }
@@ -126,13 +106,15 @@ public class ThreatFinderServiceCWE {
                 break;
         }
 
-        if (endElementRequiresAuthentication == GenericSelectionResource.TRUE || startElementAuthenticatesItself == GenericSelectionResource.TRUE){
+        if (endElementRequiresAuthentication == GenericSelectionResource.YES || startElementAuthenticatesItself == GenericSelectionResource.YES){
             return CWESelectionAuthentication.TRUE;
-        } else if (endElementRequiresAuthentication == GenericSelectionResource.FALSE || startElementAuthenticatesItself == GenericSelectionResource.FALSE) {
+        } else if (endElementRequiresAuthentication == GenericSelectionResource.YES || startElementAuthenticatesItself == GenericSelectionResource.YES) {
             return CWESelectionAuthentication.FALSE;
         }
 
         return CWESelectionAuthentication.UNKNOWN;
     }
+
+
 
 }

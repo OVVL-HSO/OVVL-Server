@@ -15,11 +15,11 @@ public class ProcessOptionsAnalysisUtil {
     }
 
     public static boolean processRequiresAuthentication(ProcessOptionsResource options) {
-        return options.getRequiresAuthentication() == GenericSelectionResource.TRUE;
+        return options.getRequiresAuthentication() == GenericSelectionResource.YES;
     }
 
     public static boolean processUsesCustomProtocol(ProcessOptionsResource options) {
-        return options.getCustomCommunicationProtocol() == GenericSelectionResource.TRUE;
+        return options.getCustomCommunicationProtocol() == GenericSelectionResource.YES;
     }
 
     public static boolean bothCommunicatingProcessesArentHighlyTrusted(ProcessOptionsResource options, ProcessOptionsResource secondOptions) {
@@ -28,7 +28,7 @@ public class ProcessOptionsAnalysisUtil {
     }
 
     public static boolean processImplementsDDoSProtection(ProcessOptionsResource options) {
-        return options.getDdosProtection() == GenericSelectionResource.TRUE;
+        return options.getDdosProtection() == GenericSelectionResource.YES;
     }
 
     public static boolean processMightAllowUserGeneratedContent(ProcessTypeResource type) {
@@ -36,6 +36,6 @@ public class ProcessOptionsAnalysisUtil {
     }
 
     public static boolean processDoesNotSanitizeInput(ProcessOptionsResource options) {
-        return options.getSanitizesInput() != GenericSelectionResource.FALSE;
+        return options.getSanitizesInput() != GenericSelectionResource.NO;
     }
 }

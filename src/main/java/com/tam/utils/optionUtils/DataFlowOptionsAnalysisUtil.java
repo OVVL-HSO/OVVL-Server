@@ -12,7 +12,7 @@ public class DataFlowOptionsAnalysisUtil {
     }
 
     public static boolean dataFlowTransportsSensitiveData(DataFlowOptionsResource options) {
-        return options.getTransfersSensitiveData() == GenericSelectionResource.TRUE;
+        return options.getTransfersSensitiveData() == GenericSelectionResource.YES;
     }
 
     public static boolean dataFlowNotSecure(DataFlowTypeResource type) {
@@ -20,6 +20,6 @@ public class DataFlowOptionsAnalysisUtil {
     }
 
     public static boolean dataFlowIsNotTrusted(DataFlowOptionsResource options) {
-        return options.getTrustedNetwork() == GenericSelectionResource.FALSE;
+        return options.getTrustedNetwork() == GenericSelectionResource.NO;
     }
 }

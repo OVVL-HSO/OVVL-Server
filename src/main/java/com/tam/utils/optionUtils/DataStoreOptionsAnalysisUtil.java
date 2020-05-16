@@ -10,14 +10,14 @@ public class DataStoreOptionsAnalysisUtil {
     }
 
     public static boolean dataStoreIsNotHighlyTrusted(DataStoreOptionsResource options) {
-        return options.getStoresSensitiveData() == GenericSelectionResource.TRUE;
+        return options.getStoresSensitiveData() == GenericSelectionResource.YES;
     }
 
     public static boolean dataStoreStoresLogData(DataStoreOptionsResource options) {
-        return options.getStoresLogs() == GenericSelectionResource.TRUE;
+        return options.getStoresLogs() == GenericSelectionResource.YES;
     }
 
     public static boolean dataStoreIsEncrypted(DataStoreOptionsResource options) {
-        return options.getEncrypted() == GenericSelectionResource.TRUE;
+        return options.getEncrypted() == GenericSelectionResource.YES;
     }
 }
