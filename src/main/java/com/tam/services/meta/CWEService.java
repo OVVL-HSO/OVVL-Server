@@ -43,16 +43,11 @@ public class CWEService {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
-        System.out.println("1");
         TypeReference<CWEThreatItemJson> typeReference = new TypeReference<CWEThreatItemJson>(){};
         InputStream inputStream = TypeReference.class.getResourceAsStream(fileLocation);
-        System.out.println("2");
         try {
-            System.out.println("3");
             CWEThreatItemJson cweThreatItemJson = mapper.readValue(inputStream, typeReference);
-            System.out.println("4");
             List<CWEThreatItem> cweThreatList = cweThreatItemJson.getThreatCatalogue();
-            System.out.println("5");
             cweThreatCatalogueRepository.saveAll(cweThreatList);
         } catch (IOException e) {
             e.printStackTrace();

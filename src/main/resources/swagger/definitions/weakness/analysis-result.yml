@@ -5,7 +5,7 @@ properties:
   strideThreats:
     type: array
     items:
-      $ref: '#/definitions/AppliedSTRIDEThreat'
+      $ref: '#/definitions/AppliedStrideThreat'
   cweThreats:
     type: array
     items:

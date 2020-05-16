@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DFDModelAnalysisService {
+public class DFDModelSTRIDEAnalysisService {
 
     private ThreatFinderServiceSTRIDE threatFinderServiceSTRIDE;
 
     @Autowired
-    public DFDModelAnalysisService(ThreatFinderServiceSTRIDE threatFinderServiceSTRIDE) {
+    public DFDModelSTRIDEAnalysisService(ThreatFinderServiceSTRIDE threatFinderServiceSTRIDE) {
         this.threatFinderServiceSTRIDE = threatFinderServiceSTRIDE;
         //this.threatFinderServiceCWE = threatFinderServiceCWE;
     }

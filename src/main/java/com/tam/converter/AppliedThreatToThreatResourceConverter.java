@@ -1,10 +1,10 @@
 package com.tam.converter;
 
-import com.tam.model.AppliedSTRIDEThreatResource;
+import com.tam.model.AppliedStrideThreatResource;
 import com.tam.model.StrideThreatResource;
 
 public class AppliedThreatToThreatResourceConverter {
-    public static StrideThreatResource convert(AppliedSTRIDEThreatResource threatResource) {
+    public static StrideThreatResource convert(AppliedStrideThreatResource threatResource) {
         return new StrideThreatResource()
                 .title(threatResource.getTitle())
                 .threatCategory(threatResource.getThreatCategory())

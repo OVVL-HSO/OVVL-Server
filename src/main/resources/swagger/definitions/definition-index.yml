@@ -97,7 +97,7 @@ StrideThreat:
   $include: ./weakness/stride-threat.yml
 
 # CWE-based threats
-CWEThreat:
+CweThreat:
   $include: ./weakness/cwe-threat.yml
 
 # Used to set the applicable state of STRIDE threats
@@ -111,11 +111,11 @@ ThreatPriority:
 # Like Threat, but has an ID
 # Otherwise, every time threats are returned and their applicable state was changed, a new DataSet would be added
 # to the Machine Learning algorithms and thus created a wrongly weighted result
-AppliedSTRIDEThreat:
+AppliedStrideThreat:
   $include: ./weakness/applied-stride-threat.yml
 
 # Same as above, but for CWE-based threats
-AppliedCWEThreat:
+AppliedCweThreat:
   $include: ./weakness/applied-cwe-threat.yml
 
 

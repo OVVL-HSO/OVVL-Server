@@ -134,7 +134,7 @@ public class FindUtil {
         return oldDataFlows.stream().map(AnalysisDataFlowResource::getId).collect(Collectors.toList());
     }
 
-    public static boolean threatExistsInListOfThreats(List<AppliedSTRIDEThreatResource> applyingThreats, String threatID) {
+    public static boolean threatExistsInListOfThreats(List<AppliedStrideThreatResource> applyingThreats, String threatID) {
         return applyingThreats.stream().anyMatch(threat -> threat.getThreatID().equals(threatID));
     }
 

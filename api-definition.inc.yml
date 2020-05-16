@@ -1127,7 +1127,7 @@ definitions:
         type: array
         items:
           type: string
-  CWEThreat:
+  CweThreat:
     type: object
     properties:
       cwe:
@@ -1150,7 +1150,7 @@ definitions:
       - low
       - medium
       - high
-  AppliedSTRIDEThreat:
+  AppliedStrideThreat:
     allOf:
       - $ref: '#/definitions/StrideThreat'
       - type: object
@@ -1161,7 +1161,13 @@ definitions:
             $ref: '#/definitions/ApplicableState'
           priority:
             $ref: '#/definitions/ThreatPriority'
-  AppliedCWEThreat: {}
+  AppliedCweThreat:
+    allOf:
+      - $ref: '#/definitions/CweThreat'
+      - type: object
+        properties:
+          threatID:
+            type: string
   ThreatDataSet:
     type: object
     properties:
@@ -1399,6 +1405,10 @@ definitions:
         $ref: '#/definitions/BoundaryType'
       options:
         $ref: '#/definitions/BoundaryOptions'
+      elements:
+        type: array
+        items:
+          type: string
   AnalysisResult:
     type: object
     properties:
@@ -1407,7 +1417,7 @@ definitions:
       strideThreats:
         type: array
         items:
-          $ref: '#/definitions/AppliedSTRIDEThreat'
+          $ref: '#/definitions/AppliedStrideThreat'
       cweThreats:
         type: array
         items:
