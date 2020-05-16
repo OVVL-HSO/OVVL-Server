@@ -10,5 +10,7 @@ properties:
     $ref: '#/definitions/GenericSelection'
   accessible:
     $ref: '#/definitions/GenericSelection'
+  authenticatesItself:
+    $ref: '#/definitions/GenericSelection'
   appType:
     $ref: '#/definitions/AppType'

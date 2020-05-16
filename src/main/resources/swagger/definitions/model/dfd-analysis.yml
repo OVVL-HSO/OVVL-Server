@@ -18,7 +18,7 @@ properties:
     type: array
     items:
       $ref: '#/definitions/AnalysisProcess'
-  boundaries:
+  trustBoundaries:
     type: array
     items:
       $ref: '#/definitions/AnalysisBoundary'

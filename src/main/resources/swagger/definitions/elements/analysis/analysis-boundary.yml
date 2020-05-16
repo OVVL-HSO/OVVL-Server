@@ -8,3 +8,7 @@ properties:
     $ref: '#/definitions/BoundaryType'
   options:
     $ref: '#/definitions/BoundaryOptions'
+  elements:
+    type: array
+    items:
+      type: string

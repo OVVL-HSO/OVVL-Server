@@ -1257,7 +1257,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/AnalysisProcess'
-      boundaries:
+      trustBoundaries:
         type: array
         items:
           $ref: '#/definitions/AnalysisBoundary'
@@ -1506,6 +1506,8 @@ definitions:
         $ref: '#/definitions/GenericSelection'
       accessible:
         $ref: '#/definitions/GenericSelection'
+      authenticatesItself:
+        $ref: '#/definitions/GenericSelection'
       appType:
         $ref: '#/definitions/AppType'
   ProcessOptions:
@@ -1579,9 +1581,9 @@ definitions:
   GenericSelection:
     type: string
     enum:
-      - true
-      - false
-      - notSelected
+      - 'Yes'
+      - 'No'
+      - Not Selected
   ScaleSelection:
     type: string
     enum:

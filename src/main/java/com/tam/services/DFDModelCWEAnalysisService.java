@@ -45,21 +45,9 @@ public class DFDModelCWEAnalysisService {
         // At first, the type is set very generic. It gets specified later.
         ThreatMetaData threatMetaData = ThreatGenerationServiceHelperUtil.getRequiredDataForThreatGenerationFromElements(dataFlow);
 
-        System.out.println("threatMetaData.getEndElementType():" + threatMetaData.getEndElementType());
-        switch (threatMetaData.getEndElementType()){
-            case "process":
-                break;
-            case "interactor":
-                break;
-            case "datastore":
-                break;
-            default:
-                return;
-        }
-        //GenericModelElement dataFlowEndElement = GenericElementUtil.convertDataFlowConnectedElementsToGenericElement(dataFlow.getEndElement());
+        threatFinderServiceCWE.findThreats(threatMetaData, dfdModelToBeAnalyzed ,dataFlow , foundThreats);
 
 
-        //threatFinderServiceCWE.findDataFlowThreats(foundThreats, dataFlow, threatMetaData);
 
     }
 

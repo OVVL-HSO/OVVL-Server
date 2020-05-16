@@ -177,6 +177,7 @@ public class ModelApiController implements ModelApi {
         if (dfdModel == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
         // Because the analysis model will be stored, it needs an ID in case the same model is analyzed later again
         if (dfdModel.getModelID().equals("")) {
             dfdModel.setModelID(UUID.randomUUID().toString());

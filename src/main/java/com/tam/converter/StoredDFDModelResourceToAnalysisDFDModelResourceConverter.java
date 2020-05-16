@@ -18,7 +18,7 @@ public class StoredDFDModelResourceToAnalysisDFDModelResourceConverter {
                 .dataFlows(convertDataFlowsToAnalysisDataFlows(storedDFDModelResource.getDataFlows()))
                 .dataStores(convertDataStoresToAnalysisDataStores(storedDFDModelResource.getDataStores()))
                 .processes(convertProcessesToAnalysisProcesses(storedDFDModelResource.getProcesses()))
-                .boundaries(convertTrustBoundariesToAnalyisBoundaries(storedDFDModelResource.getTrustBoundaries()))
+                .trustBoundaries(convertTrustBoundariesToAnalyisBoundaries(storedDFDModelResource.getTrustBoundaries()))
                 .modelID(storedDFDModelResource.getModelID() != null ? storedDFDModelResource.getModelID() : "");
     }
 

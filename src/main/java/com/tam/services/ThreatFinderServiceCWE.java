@@ -1,12 +1,12 @@
 package com.tam.services;
 
-import com.tam.model.AnalysisDFDModelResource;
-import com.tam.model.CWEThreatResource;
+import com.tam.model.*;
 import com.tam.model.MitreCWE.ThreatCatalogue.AttributeSelection.*;
-import com.tam.model.ThreatMetaData;
+import com.tam.utils.ElementTypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -18,25 +18,121 @@ public class ThreatFinderServiceCWE {
 
     void findThreats(ThreatMetaData threatMetaData,
                      AnalysisDFDModelResource dfdModelToBeAnalyzed,
+                     AnalysisDataFlowResource dataFlow,
                      List<CWEThreatResource> foundThreats){
-        CWEThreatTableSelectionAttributes elementAttributes = getCWEThreatTableSelectionAttributes();
+        CWEThreatTableSelectionAttributes elementAttributes = getCWEThreatTableSelectionAttributes(threatMetaData, dfdModelToBeAnalyzed);
 
 
 
     }
 
-    private CWEThreatTableSelectionAttributes getCWEThreatTableSelectionAttributes(){
+    private CWEThreatTableSelectionAttributes getCWEThreatTableSelectionAttributes(ThreatMetaData threatMetaData, AnalysisDFDModelResource dfdModelToBeAnalyzed){
         // initialize the element attributes with the default case of unknown attributes
         CWEThreatTableSelectionAttributes elementAttributes = new CWEThreatTableSelectionAttributes(
-                CWESelectionAccessVector.UNKNOWN,
-                CWESelectionAuthentication.UNKNOWN,
+                getCWESelectionAccessVector(threatMetaData, dfdModelToBeAnalyzed),
+                getCWESelectionAuthentication(threatMetaData, dfdModelToBeAnalyzed),
                 CWESelectionLanguage.UNKNOWN,
                 CWESelectionTechnology.UNKNOWN
-        ).builder().build();
+        );
 
 
+        System.out.println(elementAttributes.getAuthentication());
+
+                /*
+        System.out.println("threatMetaData.getEndElementType():" + threatMetaData.getEndElementType());
+        switch (threatMetaData.getEndElementType()){
+            case "process":
+                break;
+            case "interactor":
+                break;
+            case "datastore":
+                break;
+            default:
+                return;
+        }
+        */
+
+        //GenericModelElement dataFlowEndElement = GenericElementUtil.convertDataFlowConnectedElementsToGenericElement(dataFlow.getEndElement());
+
+
+        //
+        //
+        //ThreatGenerationServiceHelperUtil.createAffectedElementsList
+
+        //return new CWEThreatResource()
+        //        .
+        /*
+        *
+        *  return new STRIDEThreatResource()
+                .threatCategory(STRIDEResource.INFORMATION_DISCLOSURE)
+                .title("Missing Encryption")
+                .description("An attacker might be able to access sensitive data if they get access to " + name + ". Consider encrypting the data.")
+                .affectedElements(ThreatGenerationServiceHelperUtil.createAffectedElementsList(threatMetaData));
+        * */
 
         return elementAttributes;
+    }
+
+    // determine the access vector of connection/two elements by checking if they are in the same trust boundary
+    private CWESelectionAccessVector getCWESelectionAccessVector(ThreatMetaData threatMetaData, AnalysisDFDModelResource dfdModelToBeAnalyzed){
+        String startElementId = threatMetaData.getStartElementID();
+        String endElementId = threatMetaData.getEndElementID();
+        List<String> elementIds = Arrays.asList(startElementId, endElementId);
+
+        if (dfdModelToBeAnalyzed.getTrustBoundaries() == null) {
+            return CWESelectionAccessVector.UNKNOWN;
+        }
+
+        if (dfdModelToBeAnalyzed.getTrustBoundaries().size()>0){
+            for (AnalysisBoundaryResource boundary : dfdModelToBeAnalyzed.getTrustBoundaries()) {
+                if(boundary.getElements().contains(startElementId) ||boundary.getElements().contains(endElementId)){
+                    if (boundary.getElements().containsAll(elementIds)){
+                        return  CWESelectionAccessVector.NETWORK;
+                    }
+                }
+            }
+            return CWESelectionAccessVector.LOCAL;
+        }
+        return CWESelectionAccessVector.UNKNOWN;
+    }
+
+    private CWESelectionAuthentication getCWESelectionAuthentication(ThreatMetaData threatMetaData, AnalysisDFDModelResource dfdModelToBeAnalyzed){
+        GenericSelectionResource startElementAuthenticatesItself = GenericSelectionResource.NOTSELECTED;
+        GenericSelectionResource endElementAuthenticatesItself = GenericSelectionResource.NOTSELECTED;
+        GenericSelectionResource startElementRequiresAuthentication = GenericSelectionResource.NOTSELECTED;
+        GenericSelectionResource endElementRequiresAuthentication = GenericSelectionResource.NOTSELECTED;
+
+        if (threatMetaData.getEndElementType() == "process"){
+            AnalysisProcessResource process = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getEndElementID());
+            if (process != null) {
+                System.out.println(process);
+                endElementRequiresAuthentication = process.getOptions().getRequiresAuthentication();
+            }
+        }
+
+        switch (threatMetaData.getStartElementType()){
+            case "process":
+                // process.getOptions().getAuthenticatesItself();
+                AnalysisProcessResource process = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getStartElementID());
+                if (process != null){
+                    endElementRequiresAuthentication = process.getOptions().getAuthenticatesItself();
+                }
+                break;
+            case "interactor":
+                AnalysisInteractorResource interactor = ElementTypeUtil.findInteractor(dfdModelToBeAnalyzed.getInteractors(), threatMetaData.getStartElementID());
+                if (interactor != null){
+                    endElementRequiresAuthentication = interactor.getOptions().getAuthenticatesItself();
+                }
+                break;
+        }
+
+        if (endElementRequiresAuthentication == GenericSelectionResource.TRUE || startElementAuthenticatesItself == GenericSelectionResource.TRUE){
+            return CWESelectionAuthentication.TRUE;
+        } else if (endElementRequiresAuthentication == GenericSelectionResource.FALSE || startElementAuthenticatesItself == GenericSelectionResource.FALSE) {
+            return CWESelectionAuthentication.FALSE;
+        }
+
+        return CWESelectionAuthentication.UNKNOWN;
     }
 
 }
