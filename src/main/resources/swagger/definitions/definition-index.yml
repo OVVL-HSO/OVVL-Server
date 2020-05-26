@@ -99,7 +99,7 @@ StrideThreat:
   $include: ./weakness/stride-threat.yml
 
 # CWE-based threats
-CweThreat:
+CWEThreat:
   $include: ./weakness/cwe-threat.yml
 
 # Used to set the applicable state of STRIDE threats
