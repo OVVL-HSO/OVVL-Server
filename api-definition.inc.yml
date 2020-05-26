@@ -1447,7 +1447,7 @@ definitions:
       cweThreats:
         type: array
         items:
-          $ref: '#/definitions/CWEThreat'
+          $ref: '#/definitions/CweThreat'
       vulnerabilities:
         type: array
         items:
