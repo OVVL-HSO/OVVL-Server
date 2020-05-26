@@ -9,7 +9,7 @@ properties:
   cweThreats:
     type: array
     items:
-      $ref: '#/definitions/AppliedCweThreat'
+      $ref: '#/definitions/CWEThreat'
   vulnerabilities:
     type: array
     items:

@@ -188,7 +188,7 @@ public class ModelApiController implements ModelApi {
         // And delete the old one, so only one is cached at all times
         workingAreaRepository.deleteAllByUsername(username);
         List<AppliedStrideThreatResource> foundSTRIDEThreats;
-        List<AppliedCweThreatResource> foundCWEThreats;
+        List<CWEThreatResource> foundCWEThreats;
 
         // If the stored model has a different model ID than the new model, we delete the old working area and do a fresh analysis
         if (oldWorkingArea == null || !oldWorkingArea.getCurrentModel().getModelID().equals(dfdModel.getModelID())) {
@@ -202,7 +202,7 @@ public class ModelApiController implements ModelApi {
                     analyzeDFDModelForSTRIDEThreats(modelWithElementsThatNeedToBeAnalyzed, oldWorkingArea.getFoundThreats());
             //foundCWEThreats = analyzeDFDModelForCWEThreats(modelWithElementsThatNeedToBeAnalyzed, oldWorkingArea.getFoundCWEThreats());
         }
-        foundCWEThreats = findCWEEThreatResourcesAndConvertToAppliedCWEThreats(dfdModel);
+        foundCWEThreats = analyzeDFDModelForCWEThreats(dfdModel);
 
         // Then we load the vulnerability data...
         List<CVEResource> cveItems = new ArrayList<>();
@@ -222,32 +222,29 @@ public class ModelApiController implements ModelApi {
 
     // STRIDE based analysis functions:
     private List<AppliedStrideThreatResource> findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats(AnalysisDFDModelResource model) {
-        System.out.println("findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats");
         List<STRIDEThreatResource> foundSTRIDEThreats = dfdModelStrideAnalysisService.analyzeSTRIDEThreatModel(model);
         return STRIDEThreatResourceToAppliedSTRIDEThreatConverter.convertThreatResourcesToAppliedThreats(foundSTRIDEThreats);
     }
 
     private List<AppliedStrideThreatResource> analyzeDFDModelForSTRIDEThreats(AnalysisDFDModelResource model,
                                                                               List<AppliedStrideThreatResource> oldThreats) {
-        System.out.println("analyzeDFDModelForSTRIDEThreats");
         List<AppliedStrideThreatResource> appliedSTRIDEThreats = findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats(model);
         return DeleteUtil.deleteDuplicateSTRIDEThreatsFromThreatList(appliedSTRIDEThreats, oldThreats);
     }
 
     // CWE based analysis functions:
-    private List<AppliedCweThreatResource> findCWEEThreatResourcesAndConvertToAppliedCWEThreats(AnalysisDFDModelResource model) {
-        System.out.println("findCWEEThreatResourcesAndConvertToAppliedCWEThreats");
+    private List<CWEThreatResource> analyzeDFDModelForCWEThreats(AnalysisDFDModelResource model) {
         List<CWEThreatResource> foundCWEThreats = dfdModelCweAnalysisService.analyzeCWEThreatModel(model);
-        return CWEThreatResourceToAppliedCWEThreatConverter.convertThreatResourcesToAppliedThreats(foundCWEThreats);
+        return foundCWEThreats; //CWEThreatResourceToAppliedCWEThreatConverter.convertThreatResourcesToAppliedThreats(foundCWEThreats);
     }
 
+    /*
     private List<AppliedCweThreatResource> analyzeDFDModelForCWEThreats(AnalysisDFDModelResource model,
                                                                               List<AppliedCweThreatResource> oldThreats) {
-        System.out.println("analyzeDFDModelForCWEThreats");
         List<AppliedCweThreatResource> appliedCWEThreats = findCWEEThreatResourcesAndConvertToAppliedCWEThreats(model);
         //return DeleteUtil.deleteDuplicateSTRIDEThreatsFromThreatList(appliedCWEThreats, oldThreats);
         return appliedCWEThreats;
-    }
+    }*/
 
     private List<CVEResource> loadCVEItems(AnalysisDFDModelResource dfdModel) {
         List<CVEResource> foundCVES = new ArrayList<>();
@@ -260,7 +257,7 @@ public class ModelApiController implements ModelApi {
     private void createAndSaveNewWorkingAreaState(String username,
                                                   AnalysisDFDModelResource dfdModel,
                                                   List<AppliedStrideThreatResource> newThreats,
-                                                  List<AppliedCweThreatResource> newCWEThreats) {
+                                                  List<CWEThreatResource> newCWEThreats) {
         WorkingArea workingArea = new WorkingArea(username, dfdModel, newThreats, newCWEThreats);
         workingAreaRepository.save(workingArea);
     }

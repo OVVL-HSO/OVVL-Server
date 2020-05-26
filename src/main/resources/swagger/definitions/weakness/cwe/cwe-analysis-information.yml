@@ -1,0 +1,22 @@
+type: object
+properties:
+  cwePercentageInSelection:
+    type: number
+  spoofingProportion:
+    type: number
+  tamperingProportion:
+    type: number
+  repudiationProportion:
+    type: number
+  informationDisclosureProportion:
+    type: number
+  denialOfServiceProportion:
+    type: number
+  elevationOfPrivilegeProportion:
+    type: number
+  meanBaseScore:
+    type: number
+  meanImpactScore:
+    type: number
+  meanExploitabilityScore:
+    type: number

@@ -22,3 +22,5 @@ properties:
     $ref: '#/definitions/GenericSelection'
   customCommunicationProtocol:
     $ref: '#/definitions/GenericSelection'
+  programmingLanguage:
+    $ref: '#/definitions/ProgrammingLanguage'

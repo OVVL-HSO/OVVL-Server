@@ -1070,6 +1070,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CommonConsequences'
+      analysisInformation:
+        type: object
+        $ref: '#/definitions/CweThreatAnalysisInformation'
   CommonConsequences:
     type: object
     properties:
@@ -1105,6 +1108,29 @@ definitions:
         type: string
       description:
         type: string
+  CweThreatAnalysisInformation:
+    type: object
+    properties:
+      cwePercentageInSelection:
+        type: number
+      spoofingProportion:
+        type: number
+      tamperingProportion:
+        type: number
+      repudiationProportion:
+        type: number
+      informationDisclosureProportion:
+        type: number
+      denialOfServiceProportion:
+        type: number
+      elevationOfPrivilegeProportion:
+        type: number
+      meanBaseScore:
+        type: number
+      meanImpactScore:
+        type: number
+      meanExploitabilityScore:
+        type: number
   STRIDE:
     type: string
     enum:
@@ -1421,7 +1447,7 @@ definitions:
       cweThreats:
         type: array
         items:
-          $ref: '#/definitions/AppliedCweThreat'
+          $ref: '#/definitions/CWEThreat'
       vulnerabilities:
         type: array
         items:
@@ -1535,6 +1561,8 @@ definitions:
         $ref: '#/definitions/GenericSelection'
       customCommunicationProtocol:
         $ref: '#/definitions/GenericSelection'
+      programmingLanguage:
+        $ref: '#/definitions/ProgrammingLanguage'
   DataStoreOptions:
     type: object
     properties:
@@ -1613,6 +1641,14 @@ definitions:
       - Anywhere
       - Interal Network
       - Local System
+      - Not Selected
+  ProgrammingLanguage:
+    type: string
+    enum:
+      - Compiled
+      - Interpreted
+      - Web
+      - JIT-Compiled
       - Not Selected
   NetworkType:
     type: string

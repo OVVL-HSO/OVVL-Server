@@ -87,6 +87,8 @@ DetectionMethods:
   $include: ./weakness/cwe/detection-methods.yml
 PotentialMitigations:
   $include: ./weakness/cwe/potential-mitigations.yml
+CweThreatAnalysisInformation:
+  $include: ./weakness/cwe/cwe-analysis-information.yml
 
 # STRIDE enum
 STRIDE:
@@ -212,6 +214,9 @@ DataHandling:
 InputOrigin:
   $include: ./elements/properties/process-related/input-origin.yml
 
+# Defines the used programming language a process is written in
+ProgrammingLanguage:
+  $include: ./elements/properties/process-related/programming-language.yml
 # Defines the network used by a dataflow
 NetworkType:
   $include: ./elements/properties/dataflow-related/network-type.yml

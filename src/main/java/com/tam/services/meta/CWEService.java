@@ -70,10 +70,10 @@ public class CWEService {
                 Document doc = dBuilder.parse(xmlFile);
                 doc.getDocumentElement().normalize();
 
-
+                // Add normal weaknesses
                 NodeList nList = doc.getElementsByTagName("Weakness");
-                for (int temp = 0; temp < nList.getLength(); temp++) {
 
+                for (int temp = 0; temp < nList.getLength(); temp++) {
                     Node nNode = nList.item(temp);
 
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -102,6 +102,40 @@ public class CWEService {
                         cweRepository.save(cwe);
                     }
                 }
+
+                // Add categories
+                nList = doc.getElementsByTagName("Category");
+
+                for (int temp = 0; temp < nList.getLength(); temp++) {
+                    Node nNode = nList.item(temp);
+
+                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) nNode;
+
+                        CWEItem cwe = CWEItem.builder()
+                                .id(Integer.parseInt(eElement.getAttribute("ID")))
+                                .cweName(eElement.getAttribute("Name"))
+                                .weaknessAbstraction("Category")
+                                .status(eElement.getAttribute("Status"))
+                                .description(eElement.getElementsByTagName("Summary").item(0).getTextContent())
+                                .extendedDescription(new ArrayList<>())
+                                .relatedWeaknesses(getCategoryElementRelatedWeaknesses(eElement))
+                                .weaknessOrdinalities(new ArrayList<>())
+                                .applicablePlatforms(new ArrayList<>())
+                                .backgroundDetails("")
+                                .modeOfIntroduction(new ArrayList<>())
+                                .likelihoodOfExploitation("unknown")
+                                .commonConsequences(new ArrayList<>())
+                                .detectionMethods(new ArrayList<>())
+                                .potentialMitigations(new ArrayList<>())
+                                .affectedResources(new ArrayList<>())
+                                .relatedAttackPatterns(new ArrayList<>())
+                                .build();
+
+                        cweRepository.save(cwe);
+                    }
+                }
+
             }
 
 
@@ -159,6 +193,29 @@ public class CWEService {
             return relatedWeaknesses;
         }
     }
+
+    private List<CWERelatedWeakness> getCategoryElementRelatedWeaknesses(Element eElement){
+        List<CWERelatedWeakness> relatedWeaknesses = new ArrayList<>();
+        try {
+            NodeList relatedWeaknessesNote = eElement.getElementsByTagName("Has_Member");
+
+            if (relatedWeaknessesNote.getLength() > 0) {
+                for  (int i = 0; i < relatedWeaknessesNote.getLength(); i++){
+                    Element currentNodeElement =  (Element) relatedWeaknessesNote.item(i);
+                    CWERelatedWeakness relatedWeakness = CWERelatedWeakness.builder()
+                            .nature("ParentOf")
+                            .cwe_id(Integer.parseInt(currentNodeElement.getAttribute("CWE_ID")))
+                            .build();
+                    relatedWeaknesses.add(relatedWeakness);
+                }
+            }
+            return relatedWeaknesses;
+        } catch (NullPointerException e) {
+            return relatedWeaknesses;
+        }
+    }
+
+
 
     private List<CWEWeaknessOrdinalities> getElementWeaknessOrdinalities(Element eElement){
         List<CWEWeaknessOrdinalities> weaknessOrdinalities = new ArrayList<>();

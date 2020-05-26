@@ -12,12 +12,12 @@ public class WorkingArea {
     private String username;
     private AnalysisDFDModelResource currentModel;
     private List<AppliedStrideThreatResource> foundThreats;
-    private List<AppliedCweThreatResource> foundCWEThreats;
+    private List<CWEThreatResource> foundCWEThreats;
 
     public WorkingArea(String username,
-                AnalysisDFDModelResource currentModel,
-                List<AppliedStrideThreatResource> foundThreats,
-                List<AppliedCweThreatResource> foundCWEThreats) {
+                       AnalysisDFDModelResource currentModel,
+                       List<AppliedStrideThreatResource> foundThreats,
+                       List<CWEThreatResource> foundCWEThreats) {
         this.username = username;
         this.currentModel = currentModel;
         this.foundThreats = foundThreats;

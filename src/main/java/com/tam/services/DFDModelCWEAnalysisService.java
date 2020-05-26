@@ -48,8 +48,4 @@ public class DFDModelCWEAnalysisService {
 
     }
 
-    // Find the end element on a dataflow indepenent of its type
-    private void findDataFlowEndElement(){
-
-    }
 }

@@ -20,3 +20,6 @@ properties:
     type: array
     items:
       $ref: '#/definitions/CommonConsequences'
+  analysisInformation:
+    type: object
+    $ref: '#/definitions/CweThreatAnalysisInformation'
