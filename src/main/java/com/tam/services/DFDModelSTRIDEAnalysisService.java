@@ -20,12 +20,12 @@ public class DFDModelSTRIDEAnalysisService {
         //this.threatFinderServiceCWE = threatFinderServiceCWE;
     }
 
-    public List<STRIDEThreatResource> analyzeSTRIDEThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
+    public List<StrideThreatResource> analyzeSTRIDEThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
         return findSTRIDEThreatsOnSelectedThreatModel(dfdModelToBeAnalyzed);
     }
 
-    private List<STRIDEThreatResource> findSTRIDEThreatsOnSelectedThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
-        List<STRIDEThreatResource> foundThreats = new ArrayList<>();
+    private List<StrideThreatResource> findSTRIDEThreatsOnSelectedThreatModel(AnalysisDFDModelResource dfdModelToBeAnalyzed) {
+        List<StrideThreatResource> foundThreats = new ArrayList<>();
         dfdModelToBeAnalyzed.getDataFlows()
                 .forEach(dataFlow -> getSTRIDEThreats(dataFlow, dfdModelToBeAnalyzed, foundThreats));
         return foundThreats;
@@ -33,7 +33,7 @@ public class DFDModelSTRIDEAnalysisService {
 
     private void getSTRIDEThreats(AnalysisDataFlowResource dataFlow,
                                   AnalysisDFDModelResource dfdModelToBeAnalyzed,
-                                  List<STRIDEThreatResource> foundThreats) {
+                                  List<StrideThreatResource> foundThreats) {
         // This metadata is used to generate found threats
         // It is built from the start and end element of a dataflow
         // At first, the type is set very generic. It gets specified later.
@@ -68,7 +68,7 @@ public class DFDModelSTRIDEAnalysisService {
     }
 
     private void handleAnalysisForProcessStartAndDataStoreEnd(AnalysisDFDModelResource dfdModelToBeAnalyzed,
-                                                              List<STRIDEThreatResource> foundThreats,
+                                                              List<StrideThreatResource> foundThreats,
                                                               ThreatMetaData threatMetaData) {
         AnalysisProcessResource startProcess = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getStartElementID());
         AnalysisDataStoreResource endDataStore = ElementTypeUtil.findDataStore(dfdModelToBeAnalyzed.getDataStores(), threatMetaData.getEndElementID());
@@ -79,7 +79,7 @@ public class DFDModelSTRIDEAnalysisService {
 
     private void handleAnalysisForCaseDataStoreStartAndProcessEnd(AnalysisDataFlowResource dataFlow,
                                                                   AnalysisDFDModelResource dfdModelToBeAnalyzed,
-                                                                  List<STRIDEThreatResource> foundThreats,
+                                                                  List<StrideThreatResource> foundThreats,
                                                                   ThreatMetaData threatMetaData) {
         AnalysisDataStoreResource startDataStore = ElementTypeUtil.findDataStore(dfdModelToBeAnalyzed.getDataStores(), threatMetaData.getStartElementID());
         AnalysisProcessResource endProcess = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getEndElementID());
@@ -91,7 +91,7 @@ public class DFDModelSTRIDEAnalysisService {
 
     private void handleAnalysisForProcessStartAndProcessEnd(AnalysisDataFlowResource dataFlow,
                                                             AnalysisDFDModelResource dfdModelToBeAnalyzed,
-                                                            List<STRIDEThreatResource> foundThreats,
+                                                            List<StrideThreatResource> foundThreats,
                                                             ThreatMetaData threatMetaData) {
         AnalysisProcessResource startProcess = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getStartElementID());
         AnalysisProcessResource endProcess = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getEndElementID());
@@ -103,7 +103,7 @@ public class DFDModelSTRIDEAnalysisService {
 
     private void handleAnalysisForInteractorStartProcessEnd(AnalysisDataFlowResource dataFlow,
                                                             AnalysisDFDModelResource dfdModelToBeAnalyzed,
-                                                            List<STRIDEThreatResource> foundThreats,
+                                                            List<StrideThreatResource> foundThreats,
                                                             ThreatMetaData threatMetaData) {
         AnalysisInteractorResource startInteractor = ElementTypeUtil.findInteractor(dfdModelToBeAnalyzed.getInteractors(), threatMetaData.getStartElementID());
         AnalysisProcessResource endProcess = ElementTypeUtil.findProcess(dfdModelToBeAnalyzed.getProcesses(), threatMetaData.getEndElementID());

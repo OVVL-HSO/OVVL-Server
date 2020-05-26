@@ -192,7 +192,7 @@ public class ModelApiController implements ModelApi {
 
         // If the stored model has a different model ID than the new model, we delete the old working area and do a fresh analysis
         if (oldWorkingArea == null || !oldWorkingArea.getCurrentModel().getModelID().equals(dfdModel.getModelID())) {
-            foundSTRIDEThreats = findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats(dfdModel);
+            foundSTRIDEThreats = findStrideThreatResourcesAndConvertToAppliedSTRIDEThreats(dfdModel);
             // foundCWEThreats = findCWEEThreatResourcesAndConvertToAppliedCWEThreats(dfdModel);
         } else {
             // Otherwise, we extract the elements which got changed, analyze them, and combine them with the old ones (distinct threats)
@@ -221,14 +221,14 @@ public class ModelApiController implements ModelApi {
     }
 
     // STRIDE based analysis functions:
-    private List<AppliedStrideThreatResource> findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats(AnalysisDFDModelResource model) {
-        List<STRIDEThreatResource> foundSTRIDEThreats = dfdModelStrideAnalysisService.analyzeSTRIDEThreatModel(model);
+    private List<AppliedStrideThreatResource> findStrideThreatResourcesAndConvertToAppliedSTRIDEThreats(AnalysisDFDModelResource model) {
+        List<StrideThreatResource> foundSTRIDEThreats = dfdModelStrideAnalysisService.analyzeSTRIDEThreatModel(model);
         return STRIDEThreatResourceToAppliedSTRIDEThreatConverter.convertThreatResourcesToAppliedThreats(foundSTRIDEThreats);
     }
 
     private List<AppliedStrideThreatResource> analyzeDFDModelForSTRIDEThreats(AnalysisDFDModelResource model,
                                                                               List<AppliedStrideThreatResource> oldThreats) {
-        List<AppliedStrideThreatResource> appliedSTRIDEThreats = findSTRIDEThreatResourcesAndConvertToAppliedSTRIDEThreats(model);
+        List<AppliedStrideThreatResource> appliedSTRIDEThreats = findStrideThreatResourcesAndConvertToAppliedSTRIDEThreats(model);
         return DeleteUtil.deleteDuplicateSTRIDEThreatsFromThreatList(appliedSTRIDEThreats, oldThreats);
     }
 
