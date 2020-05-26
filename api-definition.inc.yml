@@ -1189,7 +1189,7 @@ definitions:
             $ref: '#/definitions/ThreatPriority'
   AppliedCweThreat:
     allOf:
-      - $ref: '#/definitions/CweThreat'
+      - $ref: '#/definitions/CWEThreat'
       - type: object
         properties:
           threatID:

@@ -1,5 +1,5 @@
 allOf:
-  - $ref: '#/definitions/CweThreat'
+  - $ref: '#/definitions/CWEThreat'
   - type: object
     properties:
       threatID:
